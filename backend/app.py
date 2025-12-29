@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, url_for, session
+from flask import Flask, render_template, request, redirect, session, flash, url_for
 from config import get_db_connection
 import hashlib
 
@@ -8,7 +8,7 @@ app = Flask(
     static_folder="../frontend/static"
 )
 
-app.secret_key = "adindiahub_secret"
+app.secret_key = "adindiahub_secret_key"
 
 import mysql.connector
 
@@ -24,6 +24,10 @@ def get_db_connection():
 @app.route("/")
 def home():
     return render_template("home.html")
+
+@app.route("/choose-login")
+def choose_login():
+    return render_template("choose_login.html")
 
 # ---------------- LOGIN ----------------
 @app.route("/login", methods=["GET", "POST"])
@@ -84,7 +88,6 @@ def client_register():
     return render_template("client_register.html")
 
 
-
 # ---------------- ADMIN DASHBOARD ----------------
 @app.route("/admin-dashboard")
 def admin_dashboard():
@@ -92,16 +95,55 @@ def admin_dashboard():
         return redirect("/login")
     return render_template("admin_dashboard.html")
 
-# ---------------- CLIENT DASHBOARD ----------------
-@app.route("/client/dashboard")
-def client_dashboard():
-    if "client_id" not in session:
-        return redirect("/client/login")
 
-    return render_template(
-        "client_dashboard.html",
-        client_name=session["client_name"]
-    )
+@app.route("/client-login", methods=["GET", "POST"])
+def client_login():
+    if request.method == "POST":
+        email = request.form["email"]
+        password = request.form["password"]
+
+        conn = get_db_connection()
+        cursor = conn.cursor(dictionary=True)
+
+        cursor.execute(
+            "SELECT * FROM clients WHERE email=%s AND password=%s",
+            (email, password)
+        )
+        client = cursor.fetchone()
+
+        if client:
+            session["client_id"] = client["id"]
+            session["role"] = "client"
+            return redirect("/client-dashboard")
+
+        flash("Invalid credentials ❌")
+
+    return render_template("client_login.html")
+
+
+# ---------------- CLIENT DASHBOARD ----------------
+@app.route("/client-dashboard")
+def client_dashboard():
+    if session.get("role") != "client":
+        return redirect("/client-login")
+
+    client_id = session.get("client_id")
+
+    conn = get_db_connection()
+    cursor = conn.cursor(dictionary=True)
+
+    cursor.execute("""
+        SELECT campaign_name, platform, budget, start_date, end_date, status
+        FROM campaigns
+        WHERE client_id = %s
+    """, (client_id,))
+
+    campaigns = cursor.fetchall()
+
+    cursor.close()
+    conn.close()
+
+    return render_template("client_dashboard.html", campaigns=campaigns)
 
 @app.route("/client/logout")
 def client_logout():
@@ -118,7 +160,6 @@ def add_campaign():
     conn = get_db_connection()
     cursor = conn.cursor(dictionary=True)
 
-    # Fetch clients for dropdown
     cursor.execute("SELECT id, name FROM clients")
     clients = cursor.fetchall()
 
@@ -131,21 +172,110 @@ def add_campaign():
         end_date = request.form["end_date"]
 
         cursor.execute("""
-        INSERT INTO campaigns (campaign_name, platform, budget, start_date, end_date, client_id)
-        VALUES (%s, %s, %s, %s, %s, %s)
-        """, (campaign_name, platform, budget, start_date, end_date, client_id))
-
+            INSERT INTO campaigns
+            (client_id, campaign_name, platform, budget, start_date, end_date, status)
+            VALUES (%s, %s, %s, %s, %s, %s, 'Active')
+        """, (client_id, campaign_name, platform, budget, start_date, end_date))
 
         conn.commit()
         cursor.close()
         conn.close()
 
-        return redirect("/admin-dashboard")
+        flash("Campaign added successfully ✅")
+        return redirect("/view-campaigns")
 
     cursor.close()
     conn.close()
     return render_template("add_campaign.html", clients=clients)
 
+@app.route("/view-campaigns")
+def view_campaigns():
+    if session.get("role") != "admin":
+        return redirect("/login")
+
+    conn = get_db_connection()
+    cursor = conn.cursor(dictionary=True)
+
+    cursor.execute("""
+        SELECT 
+            c.campaign_id,
+            c.campaign_name,
+            c.platform,
+            c.budget,
+            c.start_date,
+            c.end_date,
+            c.status,
+            cl.name AS client_name
+        FROM campaigns c
+        JOIN clients cl ON c.client_id = cl.id
+    """)
+
+    campaigns = cursor.fetchall()
+    cursor.close()
+    conn.close()
+
+    return render_template("view_campaigns.html", campaigns=campaigns)
+
+@app.route("/edit-campaign/<int:id>", methods=["GET", "POST"])
+def edit_campaign(id):
+    if session.get("role") != "admin":
+        return redirect("/login")
+
+    conn = get_db_connection()
+    cursor = conn.cursor(dictionary=True)
+
+    cursor.execute("SELECT * FROM campaigns WHERE campaign_id = %s", (id,))
+    campaign = cursor.fetchone()
+
+    if request.method == "POST":
+        campaign_name = request.form["campaign_name"]
+        platform = request.form["platform"]
+        budget = request.form["budget"]
+        start_date = request.form["start_date"]
+        end_date = request.form["end_date"]
+        status = request.form["status"]
+
+        cursor.execute("""
+            UPDATE campaigns SET
+                campaign_name=%s,
+                platform=%s,
+                budget=%s,
+                start_date=%s,
+                end_date=%s,
+                status=%s
+            WHERE campaign_id=%s
+        """, (campaign_name, platform, budget, start_date, end_date, status, id))
+
+        conn.commit()
+        cursor.close()
+        conn.close()
+
+        flash("Campaign updated successfully ✅")
+        return redirect("/view-campaigns")
+
+    cursor.close()
+    conn.close()
+    return render_template("edit_campaign.html", campaign=campaign)
+
+@app.route("/delete-campaign/<int:id>")
+def delete_campaign(id):
+    if session.get("role") != "admin":
+        return redirect("/login")
+
+    conn = get_db_connection()
+    cursor = conn.cursor()
+
+    cursor.execute("DELETE FROM campaigns WHERE campaign_id=%s", (id,))
+    conn.commit()
+
+    cursor.close()
+    conn.close()
+
+    flash("Campaign deleted successfully ❌")
+    return redirect("/view-campaigns")
+
+
+# ---------------- ADD CLIENT (ADMIN ONLY) ----------------
 @app.route("/add-client", methods=["GET", "POST"])
 def add_client():
     if request.method == "POST":
