@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Client Dashboard</title>
+</head>
+<body>
+
+<h2>My Campaigns</h2>
+
+<table border="1" cellpadding="10">
+    <tr>
+        <th>Campaign</th>
+        <th>Platform</th>
+        <th>Budget</th>
+        <th>Start</th>
+        <th>End</th>
+        <th>Status</th>
+    </tr>
+
+    {% for c in campaigns %}
+    <tr>
+        <td>{{ c.campaign_name }}</td>
+        <td>{{ c.platform }}</td>
+        <td>{{ c.budget }}</td>
+        <td>{{ c.start_date }}</td>
+        <td>{{ c.end_date }}</td>
+        <td>{{ c.status }}</td>
+    </tr>
+    {% endfor %}
+</table>
+
+<br>
+<a href="/logout">Logout</a>
+
+</body>
+</html>

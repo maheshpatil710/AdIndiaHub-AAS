@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>View Campaigns</title>
+</head>
+<body>
+
+<h2>All Campaigns</h2>
+
+<table border="1" cellpadding="10">
+    <tr>
+        <th>ID</th>
+        <th>Client</th>
+        <th>Campaign</th>
+        <th>Platform</th>
+        <th>Budget</th>
+        <th>Start</th>
+        <th>End</th>
+        <th>Status</th>
+        <th>Action</th>
+    </tr>
+
+    {% for c in campaigns %}
+    <tr>
+        <td>{{ c.campaign_id }}</td>
+        <td>{{ c.client_name }}</td>
+        <td>{{ c.campaign_name }}</td>
+        <td>{{ c.platform }}</td>
+        <td>{{ c.budget }}</td>
+        <td>{{ c.start_date }}</td>
+        <td>{{ c.end_date }}</td>
+        <td>{{ c.status }}</td>
+        <td>
+            <a href="/edit-campaign/{{ c.campaign_id }}">Edit</a> |
+            <a href="/delete-campaign/{{ c.campaign_id }}"
+               onclick="return confirm('Are you sure?')">Delete</a>
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+
+
+<br>
+<a href="/admin-dashboard">Back to Dashboard</a>
+
+</body>
+</html>

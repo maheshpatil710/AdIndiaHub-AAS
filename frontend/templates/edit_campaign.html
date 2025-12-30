@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Edit Campaign</title>
+</head>
+<body>
+
+<h2>Edit Campaign</h2>
+
+<form method="POST">
+    <input type="text" name="campaign_name"
+           value="{{ campaign.campaign_name }}" required><br><br>
+
+    <select name="platform">
+        <option {{ 'selected' if campaign.platform=='Google Ads' }}>Google Ads</option>
+        <option {{ 'selected' if campaign.platform=='Facebook Ads' }}>Facebook Ads</option>
+        <option {{ 'selected' if campaign.platform=='Instagram Ads' }}>Instagram Ads</option>
+    </select><br><br>
+
+    <input type="number" name="budget"
+           value="{{ campaign.budget }}" required><br><br>
+
+    <input type="date" name="start_date"
+           value="{{ campaign.start_date }}"><br><br>
+
+    <input type="date" name="end_date"
+           value="{{ campaign.end_date }}"><br><br>
+
+    <select name="status">
+        <option {{ 'selected' if campaign.status=='Active' }}>Active</option>
+        <option {{ 'selected' if campaign.status=='Paused' }}>Paused</option>
+        <option {{ 'selected' if campaign.status=='Completed' }}>Completed</option>
+    </select><br><br>
+
+    <button type="submit">Update Campaign</button>
+</form>
+
+<br>
+<a href="/view-campaigns">Back</a>
+
+</body>
+</html>
