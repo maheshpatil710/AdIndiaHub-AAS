@@ -1,16 +1,118 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Add Client</title>
+    <meta charset="UTF-8">
+    <title>Add Client | AdIndiaHub</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', sans-serif;
+            background: linear-gradient(120deg, #721e37, #98892a);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .card {
+            background: #c2c0bc;
+            width: 420px;
+            padding: 30px;
+            border-radius: 14px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+        }
+
+        .card h2 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #72371e;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            font-weight: 600;
+            font-size: 14px;
+            color: #333;
+        }
+
+        input {
+            width: 100%;
+            padding: 10px 12px;
+            margin-top: 6px;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+            outline: none;
+            font-size: 14px;
+        }
+
+        input:focus {
+            border-color: #64f38c;
+        }
+
+        .btn {
+            width: 100%;
+            margin-top: 15px;
+            padding: 12px;
+            border: none;
+            border-radius: 8px;
+            background: #eecda3;
+            color: white;
+            font-size: 15px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .btn:hover {
+            background: #f79d00;
+        }
+
+        .footer-text {
+            text-align: center;
+            margin-top: 15px;
+            font-size: 12px;
+            color: #777;
+        }
+    </style>
 </head>
 <body>
-    <h2>Add Client</h2>
-    <form method="POST">
-        <input type="text" name="name" placeholder="Client Name" required><br><br>
-        <input type="email" name="email" placeholder="Email"><br><br>
-        <input type="text" name="phone" placeholder="Phone"><br><br>
-        <input type="text" name="company" placeholder="Company"><br><br>
-        <button type="submit">Save Client</button>
+
+<div class="card">
+    <h2>Add New Client</h2>
+
+    <form method="POST" action="/add-client">
+        <div class="form-group">
+            <label>Client Name</label>
+            <input type="text" name="client_name" placeholder="Enter client name" required>
+        </div>
+
+        <div class="form-group">
+            <label>Email</label>
+            <input type="email" name="email" placeholder="Enter email address" required>
+        </div>
+
+        <div class="form-group">
+            <label>Phone</label>
+            <input type="text" name="phone" placeholder="Enter phone number" required>
+        </div>
+
+        <div class="form-group">
+            <label>Company</label>
+            <input type="text" name="company" placeholder="Enter company name">
+        </div>
+
+        <button class="btn">Save Client</button>
     </form>
+
+    <div class="footer-text">
+        © 2026 AdIndiaHub | Admin Panel
+    </div>
+</div>
+
 </body>
 </html>

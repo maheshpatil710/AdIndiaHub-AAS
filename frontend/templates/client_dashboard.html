@@ -2,35 +2,151 @@
 <html>
 <head>
     <title>Client Dashboard</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial;
+            background: #f4f6f8;
+        }
+
+        /* Navbar */
+        .navbar {
+            background: #0d6efd;
+            color: white;
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .navbar a {
+            color: white;
+            margin-left: 15px;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        /* Cards */
+        .container {
+            padding: 30px;
+        }
+
+        .cards {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .card {
+            background: white;
+            width: 250px;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+        }
+
+        .card h3 {
+            margin-top: 0;
+        }
+
+        .card a {
+            display: inline-block;
+            margin-top: 10px;
+            padding: 8px 12px;
+            background: #0d6efd;
+            color: white;
+            text-decoration: none;
+            border-radius: 4px;
+        }
+
+        /* Table */
+        table {
+            width: 100%;
+            background: white;
+            border-collapse: collapse;
+            margin-top: 30px;
+        }
+
+        th, td {
+            padding: 12px;
+            border: 1px solid #ddd;
+            text-align: center;
+        }
+
+        th {
+            background: #0d6efd;
+            color: white;
+        }
+
+        .pending { color: orange; }
+        .approved { color: green; }
+        .rejected { color: red; }
+    </style>
 </head>
 <body>
 
-<h2>My Campaigns</h2>
+<!-- NAVBAR -->
+<div class="navbar">
+    <div>
+        <h2>Client Dashboard</h2>
+    </div>
+    <div>
+        <a href="/request-campaign">Request Campaign</a>
+        <a href="/my-campaign-requests">My Requests</a>
+        <a href="/client/logout">Logout</a>
+    </div>
+</div>
 
-<table border="1" cellpadding="10">
-    <tr>
-        <th>Campaign</th>
-        <th>Platform</th>
-        <th>Budget</th>
-        <th>Start</th>
-        <th>End</th>
-        <th>Status</th>
-    </tr>
+<!-- CONTENT -->
+<div class="container">
 
-    {% for c in campaigns %}
-    <tr>
-        <td>{{ c.campaign_name }}</td>
-        <td>{{ c.platform }}</td>
-        <td>{{ c.budget }}</td>
-        <td>{{ c.start_date }}</td>
-        <td>{{ c.end_date }}</td>
-        <td>{{ c.status }}</td>
-    </tr>
-    {% endfor %}
-</table>
+    <!-- CARDS -->
+    <div class="cards">
+        <div class="card">
+            <h3>Request New Campaign</h3>
+            <p>Send a campaign request to admin.</p>
+            <a href="/request-campaign">Request</a>
+        </div>
 
-<br>
-<a href="/logout">Logout</a>
+        <div class="card">
+            <h3>My Campaign Requests</h3>
+            <p>View your campaign request status.</p>
+            <a href="/my-campaign-requests">View</a>
+        </div>
+
+        <div class="card">
+            <h3>My Active Campaigns</h3>
+            <p>View campaigns approved by admin.</p>
+            <a href="/client-dashboard">View</a>
+        </div>
+    </div>
+
+    <!-- ACTIVE CAMPAIGNS -->
+    <h3 style="margin-top:40px;">My Active Campaigns</h3>
+
+    <table>
+        <tr>
+            <th>Campaign</th>
+            <th>Platform</th>
+            <th>Budget</th>
+            <th>Start</th>
+            <th>End</th>
+            <th>Status</th>
+        </tr>
+
+        {% for c in campaigns %}
+        <tr>
+            <td>{{ c.campaign_name }}</td>
+            <td>{{ c.platform }}</td>
+            <td>{{ c.budget }}</td>
+            <td>{{ c.start_date }}</td>
+            <td>{{ c.end_date }}</td>
+            <td class="{{ c.status|lower }}">{{ c.status }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+
+</div>
 
 </body>
 </html>

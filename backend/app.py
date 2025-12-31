@@ -16,18 +16,42 @@ def get_db_connection():
     return mysql.connector.connect(
         host="localhost",
         user="root",
-        password="",          # XAMPP default
+        password="",
         database="adindiahub_db"
     )
+
+db = get_db_connection()
+cursor = db.cursor()
 
 
 @app.route("/")
 def home():
     return render_template("home.html")
+@app.route("/contact", methods=["GET", "POST"])
+def contact():
+    if request.method == "POST":
+        name = request.form["name"]
+        email = request.form["email"]
+        message = request.form["message"]
+
+        query = "INSERT INTO contact_messages (name, email, message) VALUES (%s, %s, %s)"
+        cursor.execute(query, (name, email, message))
+        db.commit()
+
+        return redirect("/contact")
+
+    return render_template("contact.html")
+
+
+@app.route("/about")
+def about():
+    return render_template("about.html")
 
 @app.route("/choose-login")
 def choose_login():
     return render_template("choose_login.html")
+
+
 
 # ---------------- LOGIN ----------------
 @app.route("/login", methods=["GET", "POST"])
@@ -62,30 +86,29 @@ def login():
     return render_template("login.html")
 
 # ---------------- REGISTER (CLIENT ONLY) ----------------
-@app.route("/client/register", methods=["GET", "POST"])
+@app.route("/client-register", methods=["GET", "POST"])
 def client_register():
     if request.method == "POST":
         name = request.form["name"]
         email = request.form["email"]
-        password = hashlib.sha256(request.form["password"].encode()).hexdigest()
-        company = request.form["company"]
-        phone = request.form["phone"]
+        password = request.form["password"]
 
-        conn = get_db_connection()
-        cursor = conn.cursor()
+        db = get_db_connection()
+        cursor = db.cursor()
 
-        cursor.execute("""
-            INSERT INTO clients (name, email, password, company_name, phone)
-            VALUES (%s, %s, %s, %s, %s)
-        """, (name, email, password, company, phone))
+        cursor.execute(
+            "INSERT INTO clients (name, email, password) VALUES (%s, %s, %s)",
+            (name, email, password)
+        )
 
-        conn.commit()
+        db.commit()
         cursor.close()
-        conn.close()
+        db.close()
 
-        return redirect("/client/login")
+        return redirect("/client-login")
 
     return render_template("client_register.html")
+ 
 
 
 # ---------------- ADMIN DASHBOARD ----------------
@@ -95,8 +118,15 @@ def admin_dashboard():
         return redirect("/login")
     return render_template("admin_dashboard.html")
 
+@app.route("/admin/messages")
+def admin_messages():
+    cursor.execute("SELECT * FROM contact_messages ORDER BY created_at DESC")
+    messages = cursor.fetchall()
+    return render_template("admin_messages.html", messages=messages)
 
-@app.route("/client-login", methods=["GET", "POST"])
+
+
+@app.route("/client/login", methods=["GET", "POST"])
 def client_login():
     if request.method == "POST":
         email = request.form["email"]
@@ -109,17 +139,21 @@ def client_login():
             "SELECT * FROM clients WHERE email=%s AND password=%s",
             (email, password)
         )
+
         client = cursor.fetchone()
+
+        cursor.close()
+        conn.close()
 
         if client:
             session["client_id"] = client["id"]
             session["role"] = "client"
+            flash("Login successful ✅")
             return redirect("/client-dashboard")
-
-        flash("Invalid credentials ❌")
+        else:
+            flash("Invalid credentials ❌")
 
     return render_template("client_login.html")
-
 
 # ---------------- CLIENT DASHBOARD ----------------
 @app.route("/client-dashboard")
@@ -144,6 +178,155 @@ def client_dashboard():
     conn.close()
 
     return render_template("client_dashboard.html", campaigns=campaigns)
+
+@app.route("/request-campaign", methods=["GET", "POST"])
+def request_campaign():
+    if session.get("role") != "client":
+        return redirect("/client-login")
+
+    if request.method == "POST":
+        client_id = session.get("client_id")
+        campaign_name = request.form["campaign_name"]
+        platform = request.form["platform"]
+        budget = request.form["budget"]
+        start_date = request.form["start_date"]
+        end_date = request.form["end_date"]
+        message = request.form["message"]
+
+        conn = get_db_connection()
+        cursor = conn.cursor()
+
+        cursor.execute("""
+            INSERT INTO campaign_requests
+            (client_id, campaign_name, platform, budget, start_date, end_date, message)
+            VALUES (%s, %s, %s, %s, %s, %s, %s)
+        """, (client_id, campaign_name, platform, budget, start_date, end_date, message))
+
+        conn.commit()
+        cursor.close()
+        conn.close()
+
+        flash("Campaign request sent successfully ✅")
+        return redirect("/client-dashboard")
+
+    return render_template("request_campaign.html")
+
+@app.route("/my-campaign-requests")
+def my_campaign_requests():
+    if session.get("role") != "client":
+        return redirect("/client-login")
+
+    client_id = session.get("client_id")
+
+    conn = get_db_connection()
+    cursor = conn.cursor(dictionary=True)
+
+    cursor.execute("""
+        SELECT campaign_name, platform, budget, start_date, end_date, status
+        FROM campaign_requests
+        WHERE client_id = %s
+        ORDER BY request_id DESC
+    """, (client_id,))
+
+    requests = cursor.fetchall()
+
+    cursor.close()
+    conn.close()
+
+    return render_template("my_campaign_requests.html", requests=requests)
+
+@app.route("/admin-campaign-requests")
+def admin_campaign_requests():
+    if session.get("role") != "admin":
+        return redirect("/login")
+
+    conn = get_db_connection()
+    cursor = conn.cursor(dictionary=True)
+
+    cursor.execute("""
+        SELECT 
+            cr.request_id,
+            cr.campaign_name,
+            cr.platform,
+            cr.budget,
+            cr.start_date,
+            cr.end_date,
+            cr.status,
+            cl.name AS client_name
+        FROM campaign_requests cr
+        JOIN clients cl ON cr.client_id = cl.id
+        ORDER BY cr.request_id DESC
+    """)
+
+    requests = cursor.fetchall()
+
+    cursor.close()
+    conn.close()
+
+    return render_template("admin_campaign_requests.html", requests=requests)
+
+@app.route("/approve-request/<int:request_id>")
+def approve_request(request_id):
+    if session.get("role") != "admin":
+        return redirect("/login")
+
+    conn = get_db_connection()
+    cursor = conn.cursor(dictionary=True)
+
+    # get request data
+    cursor.execute(
+        "SELECT * FROM campaign_requests WHERE request_id=%s",
+        (request_id,)
+    )
+    req = cursor.fetchone()
+
+    # insert into campaigns
+    cursor.execute("""
+        INSERT INTO campaigns
+        (client_id, campaign_name, platform, budget, start_date, end_date, status)
+        VALUES (%s, %s, %s, %s, %s, %s, 'Active')
+    """, (
+        req["client_id"],
+        req["campaign_name"],
+        req["platform"],
+        req["budget"],
+        req["start_date"],
+        req["end_date"]
+    ))
+
+    # update request status
+    cursor.execute(
+        "UPDATE campaign_requests SET status='Approved' WHERE request_id=%s",
+        (request_id,)
+    )
+
+    conn.commit()
+    cursor.close()
+    conn.close()
+
+    flash("Campaign Approved & Created ✅")
+    return redirect("/admin-campaign-requests")
+
+@app.route("/reject-request/<int:request_id>")
+def reject_request(request_id):
+    if session.get("role") != "admin":
+        return redirect("/login")
+
+    conn = get_db_connection()
+    cursor = conn.cursor()
+
+    cursor.execute(
+        "UPDATE campaign_requests SET status='Rejected' WHERE request_id=%s",
+        (request_id,)
+    )
+
+    conn.commit()
+    cursor.close()
+    conn.close()
+
+    flash("Campaign Request Rejected ❌")
+    return redirect("/admin-campaign-requests")
+
 
 @app.route("/client/logout")
 def client_logout():
@@ -282,14 +465,14 @@ def add_client():
         name = request.form["name"]
         email = request.form["email"]
         phone = request.form["phone"]
-        company = request.form["company"]
+        company_name = request.form["company_name"]
 
         conn = get_db_connection()
         cursor = conn.cursor()
 
         cursor.execute(
-            "INSERT INTO clients (name, email, phone, company) VALUES (%s, %s, %s, %s)",
-            (name, email, phone, company)
+            "INSERT INTO clients (name, email, phone, company_name) VALUES (%s, %s, %s, %s)",
+            (name, email, phone, company_name)
         )
 
         conn.commit()

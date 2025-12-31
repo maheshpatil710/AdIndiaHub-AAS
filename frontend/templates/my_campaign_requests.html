@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>My Campaign Requests</title>
+    <style>
+        body {
+            font-family: Arial;
+            background: #f4f6f8;
+        }
+        table {
+            width: 90%;
+            margin: 30px auto;
+            border-collapse: collapse;
+            background: white;
+        }
+        th, td {
+            padding: 12px;
+            border: 1px solid #ccc;
+            text-align: center;
+        }
+        th {
+            background: #0d6efd;
+            color: white;
+        }
+        .pending { color: orange; }
+        .approved { color: green; }
+        .rejected { color: red; }
+    </style>
+</head>
+<body>
+
+<h2 style="text-align:center;">My Campaign Requests</h2>
+
+<table>
+    <tr>
+        <th>Campaign</th>
+        <th>Platform</th>
+        <th>Budget</th>
+        <th>Start</th>
+        <th>End</th>
+        <th>Status</th>
+    </tr>
+
+    {% for r in requests %}
+    <tr>
+        <td>{{ r.campaign_name }}</td>
+        <td>{{ r.platform }}</td>
+        <td>{{ r.budget }}</td>
+        <td>{{ r.start_date }}</td>
+        <td>{{ r.end_date }}</td>
+        <td class="{{ r.status|lower }}">{{ r.status }}</td>
+    </tr>
+    {% endfor %}
+</table>
+
+</body>
+</html>

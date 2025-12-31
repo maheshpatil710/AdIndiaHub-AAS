@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Admin | Contact Messages</title>
+    <style>
+        body {
+            font-family: Arial;
+            background: #f4f6f9;
+            padding: 30px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+        }
+        th, td {
+            padding: 12px;
+            border: 1px solid #ddd;
+        }
+        th {
+            background: #1d4350;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+
+<h2>📩 Contact Messages</h2>
+
+<table>
+    <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Message</th>
+        <th>Date</th>
+    </tr>
+
+    {% for msg in messages %}
+    <tr>
+        <td>{{ msg[0] }}</td>
+        <td>{{ msg[1] }}</td>
+        <td>{{ msg[2] }}</td>
+        <td>{{ msg[3] }}</td>
+        <td>{{ msg[4] }}</td>
+    </tr>
+    {% endfor %}
+</table>
+
+</body>
+</html>

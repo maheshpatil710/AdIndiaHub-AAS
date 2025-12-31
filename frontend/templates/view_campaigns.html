@@ -1,47 +1,93 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>View Campaigns</title>
+<title>View Campaigns</title>
+<style>
+body{
+    font-family: Arial;
+    background:#f4f6f9;
+    margin:0;
+    padding:30px;
+}
+
+h2{
+    text-align:center;
+    margin-bottom:20px;
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+    background:#fff;
+    box-shadow:0 10px 20px rgba(0,0,0,0.1);
+}
+
+th, td{
+    padding:12px;
+    text-align:center;
+    border-bottom:1px solid #ddd;
+}
+
+th{
+    background:#0b5ed7;
+    color:white;
+}
+
+tr:hover{
+    background:#f1f1f1;
+}
+
+.status{
+    padding:5px 10px;
+    border-radius:5px;
+    font-size:13px;
+    color:white;
+}
+
+.approved{ background:green; }
+.pending{ background:orange; }
+.rejected{ background:red; }
+
+.btn{
+    padding:6px 10px;
+    background:#dc3545;
+    color:white;
+    text-decoration:none;
+    border-radius:5px;
+}
+</style>
 </head>
+
 <body>
 
-<h2>All Campaigns</h2>
+<h2>CAMPAIGN LIST</h2>
 
-<table border="1" cellpadding="10">
-    <tr>
-        <th>ID</th>
-        <th>Client</th>
-        <th>Campaign</th>
-        <th>Platform</th>
-        <th>Budget</th>
-        <th>Start</th>
-        <th>End</th>
-        <th>Status</th>
-        <th>Action</th>
-    </tr>
+<table>
+<tr>
+    <th>ID</th>
+    <th>Campaign</th>
+    <th>Client</th>
+    <th>Platform</th>
+    <th>Budget</th>
+    <th>Start</th>
+    <th>End</th>
+    <th>Status</th>
+</tr>
 
-    {% for c in campaigns %}
-    <tr>
-        <td>{{ c.campaign_id }}</td>
-        <td>{{ c.client_name }}</td>
-        <td>{{ c.campaign_name }}</td>
-        <td>{{ c.platform }}</td>
-        <td>{{ c.budget }}</td>
-        <td>{{ c.start_date }}</td>
-        <td>{{ c.end_date }}</td>
-        <td>{{ c.status }}</td>
-        <td>
-            <a href="/edit-campaign/{{ c.campaign_id }}">Edit</a> |
-            <a href="/delete-campaign/{{ c.campaign_id }}"
-               onclick="return confirm('Are you sure?')">Delete</a>
-        </td>
-    </tr>
-    {% endfor %}
+{% for c in campaigns %}
+<tr>
+    <td>{{ c.campaign_id }}</td>
+    <td>{{ c.campaign_name }}</td>
+    <td>{{ c.client_name }}</td>
+    <td>{{ c.platform }}</td>
+    <td>₹{{ c.budget }}</td>
+    <td>{{ c.start_date }}</td>
+    <td>{{ c.end_date }}</td>
+    <td>{{ c.status }}</td>
+</tr>
+{% endfor %}
+
 </table>
-
-
-<br>
-<a href="/admin-dashboard">Back to Dashboard</a>
 
 </body>
 </html>

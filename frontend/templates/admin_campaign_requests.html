@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Campaign Requests</title>
+    <style>
+        body { font-family: Arial; background:#f4f6f8; }
+        table {
+            width:95%;
+            margin:30px auto;
+            border-collapse:collapse;
+            background:white;
+        }
+        th, td {
+            padding:10px;
+            border:1px solid #ccc;
+            text-align:center;
+        }
+        th { background:#0d6efd; color:white; }
+        a {
+            padding:6px 10px;
+            text-decoration:none;
+            color:white;
+            border-radius:4px;
+        }
+        .approve { background:green; }
+        .reject { background:red; }
+        .pending { color:orange; }
+        .approved { color:green; }
+        .rejected { color:red; }
+    </style>
+</head>
+<body>
+
+<h2 style="text-align:center;">Campaign Requests (Admin)</h2>
+
+<table>
+    <tr>
+        <th>Client</th>
+        <th>Campaign</th>
+        <th>Platform</th>
+        <th>Budget</th>
+        <th>Start</th>
+        <th>End</th>
+        <th>Status</th>
+        <th>Action</th>
+    </tr>
+
+    {% for r in requests %}
+    <tr>
+        <td>{{ r.client_name }}</td>
+        <td>{{ r.campaign_name }}</td>
+        <td>{{ r.platform }}</td>
+        <td>{{ r.budget }}</td>
+        <td>{{ r.start_date }}</td>
+        <td>{{ r.end_date }}</td>
+        <td class="{{ r.status|lower }}">{{ r.status }}</td>
+        <td>
+            {% if r.status == 'Pending' %}
+                <a class="approve" href="/approve-request/{{ r.request_id }}">Approve</a>
+                <a class="reject" href="/reject-request/{{ r.request_id }}">Reject</a>
+            {% else %}
+                ---
+            {% endif %}
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+
+</body>
+</html>
