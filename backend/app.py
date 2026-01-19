@@ -120,13 +120,14 @@ def admin_dashboard():
 
 @app.route("/admin/messages")
 def admin_messages():
+    cursor = db.cursor(dictionary=True)
     cursor.execute("SELECT * FROM contact_messages ORDER BY created_at DESC")
     messages = cursor.fetchall()
+    cursor.close()
     return render_template("admin_messages.html", messages=messages)
 
 
-
-@app.route("/client/login", methods=["GET", "POST"])
+@app.route("/client-login", methods=["GET", "POST"])
 def client_login():
     if request.method == "POST":
         email = request.form["email"]
@@ -139,19 +140,16 @@ def client_login():
             "SELECT * FROM clients WHERE email=%s AND password=%s",
             (email, password)
         )
-
-        client = cursor.fetchone()
-
+        user = cursor.fetchone()
         cursor.close()
         conn.close()
 
-        if client:
-            session["client_id"] = client["id"]
+        if user:
+            session["client_id"] = user["id"]
             session["role"] = "client"
-            flash("Login successful ✅")
             return redirect("/client-dashboard")
         else:
-            flash("Invalid credentials ❌")
+            return render_template("client_login.html", error="Invalid Email or Password")
 
     return render_template("client_login.html")
 
@@ -337,38 +335,28 @@ def client_logout():
 # ---------------- ADD CAMPAIGN (ADMIN ONLY) ----------------
 @app.route("/add-campaign", methods=["GET", "POST"])
 def add_campaign():
-    if session.get("role") != "admin":
-        return redirect("/login")
+    cursor = db.cursor(dictionary=True)
 
-    conn = get_db_connection()
-    cursor = conn.cursor(dictionary=True)
+    if request.method == "POST":
+        campaign_name = request.form.get("campaign_name")
+        client_id = request.form.get("client_id")
+        platform = request.form.get("platform")
+        budget = request.form.get("budget")
+        start_date = request.form.get("start_date")
+        end_date = request.form.get("end_date")
+
+        cursor.execute("""
+            INSERT INTO campaigns 
+            (campaign_name, client_id, platform, budget, start_date, end_date)
+            VALUES (%s, %s, %s, %s, %s, %s)
+        """, (campaign_name, client_id, platform, budget, start_date, end_date))
+
+        db.commit()
+        return redirect("/admin-dashboard")
 
     cursor.execute("SELECT id, name FROM clients")
     clients = cursor.fetchall()
 
-    if request.method == "POST":
-        client_id = request.form["client_id"]
-        campaign_name = request.form["campaign_name"]
-        platform = request.form["platform"]
-        budget = request.form["budget"]
-        start_date = request.form["start_date"]
-        end_date = request.form["end_date"]
-
-        cursor.execute("""
-            INSERT INTO campaigns
-            (client_id, campaign_name, platform, budget, start_date, end_date, status)
-            VALUES (%s, %s, %s, %s, %s, %s, 'Active')
-        """, (client_id, campaign_name, platform, budget, start_date, end_date))
-
-        conn.commit()
-        cursor.close()
-        conn.close()
-
-        flash("Campaign added successfully ✅")
-        return redirect("/view-campaigns")
-
-    cursor.close()
-    conn.close()
     return render_template("add_campaign.html", clients=clients)
 
 @app.route("/view-campaigns")
@@ -462,7 +450,7 @@ def delete_campaign(id):
 @app.route("/add-client", methods=["GET", "POST"])
 def add_client():
     if request.method == "POST":
-        name = request.form["name"]
+        name = request.form["client_name"]
         email = request.form["email"]
         phone = request.form["phone"]
         company_name = request.form["company_name"]
@@ -493,4 +481,3 @@ def logout():
 
 if __name__ == "__main__":
     app.run(debug=True)
-
