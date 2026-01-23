@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>View Clients</title>
+    <style>
+        body{
+            font-family: Arial;
+            background:#f4f6f8;
+        }
+        table{
+            width:90%;
+            margin:30px auto;
+            border-collapse:collapse;
+            background:white;
+        }
+        th, td{
+            padding:10px;
+            border:1px solid #ccc;
+            text-align:center;
+        }
+        th{
+            background:#0d6efd;
+            color:white;
+        }
+        h2{
+            text-align:center;
+            margin-top:20px;
+        }
+    </style>
+</head>
+<body>
+
+<h2>All Clients</h2>
+
+<table>
+    <tr>
+        <th>ID</th>
+        <th>Client Name</th>
+        <th>Email</th>
+        <th>Phone</th>
+        <th>Company</th>
+    </tr>
+
+    {% for c in clients %}
+    <tr>
+        <td>{{ c.id }}</td>
+        <td>{{ c.name }}</td>
+        <td>{{ c.email }}</td>
+        <td>{{ c.phone }}</td>
+        <td>{{ c.company_name }}</td>
+    </tr>
+    {% endfor %}
+
+</table>
+
+</body>
+</html>

@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Uploaded Ad Videos</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            min-height: 100vh;
+            padding: 30px;
+        }
+
+        h2 {
+            text-align: center;
+            color: #fff;
+            margin-bottom: 30px;
+            font-size: 28px;
+        }
+
+        .container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            max-width: 1200px;
+            margin: auto;
+        }
+
+        .video-card {
+            background: #fff;
+            border-radius: 12px;
+            padding: 15px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+            transition: 0.3s ease;
+        }
+
+        .video-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 30px rgba(0,0,0,0.3);
+        }
+
+        .video-title {
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #333;
+            text-align: center;
+        }
+
+        video {
+            width: 100%;
+            height: 200px;
+            border-radius: 8px;
+            background: #000;
+        }
+
+        .no-videos {
+            text-align: center;
+            color: #fff;
+            font-size: 18px;
+            margin-top: 50px;
+        }
+
+        .back-btn {
+            display: block;
+            width: 200px;
+            margin: 40px auto 0;
+            text-align: center;
+            padding: 10px;
+            background: #00c6ff;
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+            border-radius: 25px;
+            transition: 0.3s ease;
+        }
+
+        .back-btn:hover {
+            background: #0072ff;
+            transform: scale(1.05);
+        }
+    </style>
+</head>
+<body>
+
+    <h2>Uploaded Advertisement Videos</h2>
+
+    {% if videos %}
+        <div class="container">
+            {% for video in videos %}
+                <div class="video-card">
+                    <div class="video-title">{{ video }}</div>
+                    <video controls>
+                        <source src="{{ url_for('static', filename='ads_videos/' + video) }}">
+                        Your browser does not support the video tag.
+                    </video>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <p class="no-videos">No videos uploaded yet.</p>
+    {% endif %}
+
+    <a href="/admin-dashboard" class="back-btn">⬅ Back to Dashboard</a>
+
+</body>
+</html>

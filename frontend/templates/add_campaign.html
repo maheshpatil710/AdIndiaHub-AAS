@@ -1,167 +1,177 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-<meta charset="UTF-8">
-<title>Add campaign | Admin</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+<title>Add Campaign - Full Screen</title>
 <style>
-    body{
-        margin:0;
-        font-family: Arial, Helvetica, sans-serif;
-        background:#f4f7fb;
-        display:flex;
-        justify-content:center;
-        align-items:center;
-        min-height:100vh;
-    }
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
 
-    .wrapper{
-        display:flex;
-        width:850px;
-        background:#fff;
-        border-radius:12px;
-        overflow:hidden;
-        box-shadow:0 20px 40px rgba(0,0,0,0.15);
-    }
+body{
+    height:100vh;
+    width:100%;
+    font-family:'Poppins',sans-serif;
+    background:linear-gradient(120deg,#020024,#090979,#00d4ff);
+    display:flex;
+    justify-content:center;
+    align-items:center;
+}
 
-    .left-panel{
-        width:35%;
-        background:linear-gradient(180deg,#0b5ed7,#003a8f);
-        color:white;
-        padding:40px;
-        display:flex;
-        flex-direction:column;
-        justify-content:center;
-    }
+.main{
+    width:100%;
+    height:100%;
+    display:flex;
+}
 
-    .left-panel h1{
-        margin:0;
-        font-size:26px;
-    }
+.left{
+    width:50%;
+    background:linear-gradient(135deg,#1e3c72,#2a5298);
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    color:white;
+    flex-direction:column;
+    text-align:center;
+    padding:40px;
+}
 
-    .left-panel p{
-        margin-top:15px;
-        font-size:14px;
-        line-height:1.6;
-        opacity:0.9;
-    }
+.left h1{
+    font-size:48px;
+    margin-bottom:15px;
+}
 
-    .right-panel{
-        width:65%;
-        padding:40px;
-    }
+.left p{
+    font-size:18px;
+    opacity:0.9;
+}
 
-    .right-panel h2{
-        margin-bottom:20px;
-        color:#333;
-    }
+.right{
+    width:50%;
+    background:rgba(255,255,255,0.1);
+    backdrop-filter:blur(20px);
+    display:flex;
+    justify-content:center;
+    align-items:center;
+}
 
-    .form-group{
-        margin-bottom:15px;
-    }
+.form-box{
+    width:420px;
+    background:rgba(255,255,255,0.15);
+    padding:30px;
+    border-radius:16px;
+    box-shadow:0 15px 40px rgba(0,0,0,0.5);
+}
 
-    .form-group label{
-        display:block;
-        font-weight:bold;
-        margin-bottom:6px;
-        color:#555;
-    }
+.form-box h2{
+    color:white;
+    text-align:center;
+    margin-bottom:20px;
+}
 
-    .form-group input,
-    .form-group select{
-        width:100%;
-        padding:10px;
-        border-radius:6px;
-        border:1px solid #ccc;
-        font-size:14px;
-    }
+.form-group{
+    margin-bottom:14px;
+}
 
-    .form-group input:focus,
-    .form-group select:focus{
-        outline:none;
-        border-color:#0b5ed7;
-    }
+.form-group label{
+    color:#fff;
+    font-size:14px;
+    margin-bottom:5px;
+    display:block;
+}
 
-    .btn{
-        margin-top:20px;
-        width:100%;
-        padding:12px;
-        background:#0b5ed7;
-        border:none;
-        color:white;
-        font-size:16px;
-        border-radius:6px;
-        cursor:pointer;
-    }
+.form-group input,
+.form-group select{
+    width:100%;
+    padding:10px;
+    border:none;
+    outline:none;
+    border-radius:8px;
+    background:rgba(255,255,255,0.25);
+    color:white;
+}
 
-    .btn:hover{
-        background:#084298;
-    }
+.form-group select option{
+    color:black;
+}
+
+.btn{
+    width:100%;
+    padding:12px;
+    border:none;
+    border-radius:10px;
+    background:linear-gradient(135deg,#38bdf8,#0ea5e9);
+    color:white;
+    font-size:16px;
+    cursor:pointer;
+    margin-top:10px;
+    transition:0.3s;
+}
+
+.btn:hover{
+    transform:scale(1.05);
+    box-shadow:0 10px 30px rgba(56,189,248,0.7);
+}
 </style>
 </head>
-
 <body>
 
-<div class="wrapper">
+<div class="main">
 
-    <!-- Left Info Panel -->
-    <div class="left-panel">
-        <h1>Create Campaign</h1>
-        <p>
-            Add new advertising campaign for clients.  
-            Admin can manage campaign budget, platform and schedule.
-        </p>
+    <div class="left">
+        <h1>AdIndiaHub</h1>
+        <p>Create powerful campaigns and manage your clients in one place</p>
     </div>
 
-    <!-- Right Form Panel -->
-    <div class="right-panel">
-        <h2>ADD CAMPAIGN</h2>
+    <div class="right">
+        <div class="form-box">
+            <h2>Create Campaign</h2>
+            <form method="POST">
 
-        <form method="POST">
+                <div class="form-group">
+                    <label>Client</label>
+                    <select name="client_id" required>
+                        <option value="">Select Client</option>
+                        {% for client in clients %}
+                        <option value="{{ client.id }}">{{ client.name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
 
-            <div class="form-group">
-                <label>Campaign Name</label>
-                <input type="text" name="campaign_name" required>
-            </div>
+                <div class="form-group">
+                    <label>Campaign Name</label>
+                    <input type="text" name="campaign_name" required>
+                </div>
 
-            <div class="form-group">
-                <label>Client Name</label>
-                <input type="text" name="client_name" required>
-            </div>
+                <div class="form-group">
+                    <label>Platform</label>
+                    <select name="platform" required>
+                        <option>Google Ads</option>
+                        <option>Facebook Ads</option>
+                        <option>Instagram Ads</option>
+                        <option>YouTube Ads</option>
+                        <option>MakeMyTrip</option>
+                    </select>
+                </div>
 
-            <div class="form-group">
-                <label>Platform</label>
-                <select name="platform" required>
-                    <option value="">Select Platform</option>
-                    <option>Google Ads</option>
-                    <option>Facebook Ads</option>
-                    <option>Instagram Ads</option>
-                    <option>YouTube Ads</option>
-                </select>
-            </div>
+                <div class="form-group">
+                    <label>Budget</label>
+                    <input type="number" name="budget" required>
+                </div>
 
-            <div class="form-group">
-                <label>Budget (₹)</label>
-                <input type="number" name="budget" required>
-            </div>
+                <div class="form-group">
+                    <label>Start Date</label>
+                    <input type="date" name="start_date" required>
+                </div>
 
-            <div class="form-group">
-                <label>Start Date</label>
-                <input type="date" name="start_date" required>
-            </div>
+                <div class="form-group">
+                    <label>End Date</label>
+                    <input type="date" name="end_date" required>
+                </div>
 
-            <div class="form-group">
-                <label>End Date</label>
-                <input type="date" name="end_date" required>
-            </div>
-
-            <button class="btn">Create Campaign</button>
-
-        </form>
-    </div>
-
-</div>
-
-</body>
-</html>
+                <button class="btn">Create Campaign</button>
+            </form>
+        </div>
+        
+    

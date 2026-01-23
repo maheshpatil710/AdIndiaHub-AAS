@@ -9,7 +9,6 @@
             background: #f4f6f8;
         }
 
-        /* Navbar */
         .navbar {
             background: #0d6efd;
             color: white;
@@ -26,7 +25,6 @@
             font-weight: bold;
         }
 
-        /* Cards */
         .container {
             padding: 30px;
         }
@@ -45,10 +43,6 @@
             box-shadow: 0 2px 6px rgba(0,0,0,0.1);
         }
 
-        .card h3 {
-            margin-top: 0;
-        }
-
         .card a {
             display: inline-block;
             margin-top: 10px;
@@ -59,7 +53,6 @@
             border-radius: 4px;
         }
 
-        /* Table */
         table {
             width: 100%;
             background: white;
@@ -78,18 +71,15 @@
             color: white;
         }
 
+        .active { color: green; }
         .pending { color: orange; }
-        .approved { color: green; }
         .rejected { color: red; }
     </style>
 </head>
 <body>
 
-<!-- NAVBAR -->
 <div class="navbar">
-    <div>
-        <h2>Client Dashboard</h2>
-    </div>
+    <h2>Client Dashboard</h2>
     <div>
         <a href="/request-campaign">Request Campaign</a>
         <a href="/my-campaign-requests">My Requests</a>
@@ -97,10 +87,8 @@
     </div>
 </div>
 
-<!-- CONTENT -->
 <div class="container">
 
-    <!-- CARDS -->
     <div class="cards">
         <div class="card">
             <h3>Request New Campaign</h3>
@@ -121,7 +109,20 @@
         </div>
     </div>
 
-    <!-- ACTIVE CAMPAIGNS -->
+    <!-- ASSIGNED VIDEO SECTION -->
+    <h3 style="margin-top:40px;">My Assigned Advertisement Video</h3>
+
+    {% if assigned_video %}
+    <div style="background:white;padding:20px;border-radius:10px;width:400px;box-shadow:0 4px 10px rgba(0,0,0,0.1);">
+        <video width="100%" height="250" controls>
+            <source src="{{ url_for('static', filename='ads_videos/' + assigned_video) }}" type="video/mp4">
+        </video>
+    </div>
+    {% else %}
+        <p style="color:gray;">No video assigned yet by admin.</p>
+    {% endif %}
+
+    <!-- ACTIVE CAMPAIGNS TABLE -->
     <h3 style="margin-top:40px;">My Active Campaigns</h3>
 
     <table>
@@ -132,6 +133,7 @@
             <th>Start</th>
             <th>End</th>
             <th>Status</th>
+            <th>Advertisement Video</th>
         </tr>
 
         {% for c in campaigns %}
@@ -142,6 +144,18 @@
             <td>{{ c.start_date }}</td>
             <td>{{ c.end_date }}</td>
             <td class="{{ c.status|lower }}">{{ c.status }}</td>
+
+            <!-- VIDEO COLUMN (FIXED) -->
+            <td>
+                {% if c.ad_video %}
+                    <video width="200" height="120" controls>
+                        <source src="{{ url_for('static', filename='ads_videos/' + c.ad_video) }}" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                {% else %}
+                    <span style="color:red;">No video assigned</span>
+                {% endif %}
+            </td>
         </tr>
         {% endfor %}
     </table>

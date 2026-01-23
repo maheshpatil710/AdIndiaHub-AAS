@@ -1,31 +1,32 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Admin | Contact Messages</title>
+    <title>Contact Messages</title>
     <style>
         body {
             font-family: Arial;
             background: #f4f6f9;
-            padding: 30px;
         }
         table {
-            width: 100%;
+            width: 90%;
+            margin: 40px auto;
             border-collapse: collapse;
             background: white;
         }
         th, td {
-            padding: 12px;
-            border: 1px solid #ddd;
+            padding: 10px;
+            border: 1px solid #ccc;
+            text-align: center;
         }
         th {
-            background: #1d4350;
+            background: #2c3e50;
             color: white;
         }
     </style>
 </head>
 <body>
 
-<h2>📩 Contact Messages</h2>
+<h2 style="text-align:center;">Contact Messages</h2>
 
 <table>
     <tr>
@@ -38,11 +39,11 @@
 
     {% for msg in messages %}
     <tr>
-        <td>{{ msg[0] }}</td>
-        <td>{{ msg[1] }}</td>
-        <td>{{ msg[2] }}</td>
-        <td>{{ msg[3] }}</td>
-        <td>{{ msg[4] }}</td>
+        <td>{{ msg.id }}</td>
+        <td>{{ msg.name }}</td>
+        <td>{{ msg.email }}</td>
+        <td>{{ msg.message }}</td>
+        <td>{{ msg.created_at }}</td>
     </tr>
     {% endfor %}
 </table>

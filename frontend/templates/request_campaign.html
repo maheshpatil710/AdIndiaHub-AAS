@@ -1,60 +1,156 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Request Campaign</title>
-    <style>
-        body {
-            font-family: Arial;
-            background: #f4f6f8;
-        }
-        .box {
-            width: 400px;
-            background: white;
-            padding: 20px;
-            margin: 40px auto;
-            border-radius: 6px;
-        }
-        input, select, textarea, button {
-            width: 100%;
-            padding: 10px;
-            margin-top: 10px;
-        }
-        button {
-            background: #0d6efd;
-            color: white;
-            border: none;
-            cursor: pointer;
-        }
-    </style>
+<meta charset="UTF-8">
+<title>Request Campaign - AdIndiaHub</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family: "Segoe UI", sans-serif;
+}
+
+body{
+    height:100vh;
+    display:flex;
+}
+
+/* Left Section */
+.left{
+    width:50%;
+    background:linear-gradient(135deg,#0f2c5f,#0a4fa3);
+    color:white;
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
+    text-align:center;
+    padding:40px;
+}
+
+.left h1{
+    font-size:48px;
+    margin-bottom:15px;
+}
+
+.left p{
+    font-size:18px;
+    opacity:0.9;
+}
+
+/* Right Section */
+.right{
+    width:50%;
+    background:linear-gradient(135deg,#1b2a88,#22a6df);
+    display:flex;
+    justify-content:center;
+    align-items:center;
+}
+
+/* Form Box */
+.box{
+    width:380px;
+    background:rgba(255,255,255,0.15);
+    backdrop-filter:blur(10px);
+    padding:30px;
+    border-radius:12px;
+    box-shadow:0 10px 30px rgba(0,0,0,0.2);
+    color:white;
+}
+
+.box h2{
+    text-align:center;
+    margin-bottom:20px;
+}
+
+/* Inputs */
+input, select, textarea{
+    width:100%;
+    padding:12px;
+    margin-top:12px;
+    border:none;
+    border-radius:8px;
+    outline:none;
+    background:rgba(255,255,255,0.3);
+    color:white;
+}
+
+input::placeholder,
+textarea::placeholder{
+    color:#e0e0e0;
+}
+
+select option{
+    color:black;
+}
+
+label{
+    display:block;
+    margin-top:12px;
+    font-size:14px;
+}
+
+/* Button */
+button{
+    width:100%;
+    padding:12px;
+    margin-top:20px;
+    border:none;
+    border-radius:25px;
+    background:linear-gradient(135deg,#1cc7ff,#0d6efd);
+    color:white;
+    font-size:16px;
+    cursor:pointer;
+    transition:0.3s;
+}
+
+button:hover{
+    transform:scale(1.05);
+    box-shadow:0 5px 15px rgba(0,0,0,0.3);
+}
+</style>
 </head>
+
 <body>
 
-<div class="box">
-    <h2>Request New Campaign</h2>
+<!-- Left Side -->
+<div class="left">
+    <h1>AdIndiaHub</h1>
+    <p>Create powerful campaigns and manage your clients in one place</p>
+</div>
 
-    <form method="POST">
-        <input type="text" name="campaign_name" placeholder="Campaign Name" required>
+<!-- Right Side -->
+<div class="right">
+    <div class="box">
+        <h2>Request New Campaign</h2>
 
-        <select name="platform" required>
-            <option value="">Select Platform</option>
-            <option>Google Ads</option>
-            <option>Facebook Ads</option>
-            <option>Instagram Ads</option>
-            <option>YouTube Ads</option>
-        </select>
+        <form method="POST" action="/request-campaign">
+            <input type="text" name="campaign_name" placeholder="Campaign Name" required>
 
-        <input type="number" name="budget" placeholder="Budget" required>
+            <select name="platform" required>
+                <option value="">Select Platform</option>
+                <option>Google Ads</option>
+                <option>Facebook Ads</option>
+                <option>Instagram Ads</option>
+                <option>YouTube Ads</option>
+                <option>MakeMyTrip</option>
+            </select>
 
-        <label>Start Date</label>
-        <input type="date" name="start_date" required>
+            <input type="number" name="budget" placeholder="Budget" required>
 
-        <label>End Date</label>
-        <input type="date" name="end_date" required>
+            <label>Start Date</label>
+            <input type="date" name="start_date" required>
 
-        <textarea name="message" placeholder="Message for Admin (optional)"></textarea>
+            <label>End Date</label>
+            <input type="date" name="end_date" required>
 
-        <button type="submit">Send Request</button>
-    </form>
+            <textarea name="message" placeholder="Message for Admin (optional)"></textarea>
+
+            <button type="submit">Send Request</button>
+        </form>
+    </div>
 </div>
 
 </body>
