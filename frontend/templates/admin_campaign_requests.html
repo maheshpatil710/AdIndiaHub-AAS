@@ -31,6 +31,21 @@
         select, button {
             padding:6px;
         }
+
+        .badge{
+    padding:6px 12px;
+    border-radius:20px;
+    font-weight:600;
+    font-size:14px;
+}
+.green{
+    background:#16a34a;
+    color:white;
+}
+.red{
+    background:#dc2626;
+    color:white;
+}
     </style>
 </head>
 <body>
@@ -46,7 +61,6 @@
         <th>Start</th>
         <th>End</th>
         <th>Status</th>
-        <th>Ad Video</th>
         <th>Action</th>
     </tr>
 
@@ -60,38 +74,26 @@
     <td>{{ r.end_date }}</td>
     <td class="{{ r.status|lower }}">{{ r.status }}</td>
 
-    <!-- Ad Video -->
-    <td>
-        {% if r.ad_video %}
-            <video width="140" controls>
-                <source src="{{ url_for('static', filename='ads_videos/' + r.ad_video) }}">
-            </video>
-        {% else %}
-            No Video
-        {% endif %}
-    </td>
+    
 
     <!-- Action -->
     <td>
-        {% if r.status == "Pending" %}
-            <a href="/approve-request/{{ r.request_id }}" class="approve">Approve</a>
-            <a href="/reject-request/{{ r.request_id }}" class="reject">Reject</a>
+{% if r.status == 'Assigned' %}
+    <span class="badge green">Assigned ✓</span>
+{% elif r.status == 'Approved' %}
+    <form method="POST" action="/assign-video/{{ r.request_id }}">
+        <select name="ad_video" required>
+            <option value="">Select Video</option>
+            {% for v in videos %}
+                <option value="{{ v }}">{{ v }}</option>
+            {% endfor %}
+        </select>
+        <button type="submit">Assign Video</button>
+    </form>
+{% elif r.status == 'Rejected' %}
+    <span class="badge red">Rejected ✖</span>
+{% endif %}
+</td>
 
-        {% elif r.status == "Approved" and not r.ad_video %}
-            <form action="/assign-video/{{ r.request_id }}" method="POST">
-                <select name="ad_video" required>
-                
-                    <option value="">Select Video</option>
-                    {% for v in videos %}
-                        <option value="{{ v }}">{{ v }}</option>
-                    {% endfor %}
-                </select>
-                <button type="submit">Assign</button>
-            </form>
-
-        {% elif r.status == "Approved" and r.ad_video %}
-            <span style="color:green;font-weight:bold;">Assigned ✔</span>
-        {% endif %}
-    </td>
 </tr>
 {% endfor %}

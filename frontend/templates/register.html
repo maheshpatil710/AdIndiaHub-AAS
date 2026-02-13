@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Client Registration | AdIndiaHub</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+    <style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Poppins', sans-serif;
+}
+
+body{
+    min-height:100vh;
+    background:#f2f4f6;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+}
+
+/* MAIN CARD */
+.register-container{
+    width:100%;
+    max-width:420px;
+    background:#ffffff;
+    padding:35px 30px;
+    border-radius:18px;
+    box-shadow:0 20px 45px rgba(0,0,0,0.15);
+    color:#333;
+}
+
+/* TITLE */
+.register-container h2{
+    text-align:center;
+    margin-bottom:6px;
+    font-weight:600;
+    color:#020f10;
+}
+
+.register-container p{
+    text-align:center;
+    font-size:14px;
+    margin-bottom:25px;
+    color:#666;
+}
+
+/* INPUTS */
+.input-group{
+    margin-bottom:15px;
+    position:relative;
+}
+
+.input-group i{
+    position:absolute;
+    top:50%;
+    left:15px;
+    transform:translateY(-50%);
+    color:#999;
+}
+
+.input-group input{
+    width:100%;
+    padding:12px 15px 12px 42px;
+    border:1px solid #ddd;
+    outline:none;
+    border-radius:25px;
+    background:#f9f9f9;
+    font-size:14px;
+}
+
+.input-group input:focus{
+    border-color:#2c7a7b;
+    background:#fff;
+}
+
+/* BUTTON */
+.register-btn{
+    width:100%;
+    padding:12px;
+    border:none;
+    border-radius:25px;
+    background:#1080e2;
+    color:#fff;
+    font-size:15px;
+    font-weight:500;
+    cursor:pointer;
+    transition:0.3s;
+    margin-top:10px;
+}
+
+.register-btn:hover{
+    background:#256d6f;
+    transform:translateY(-1px);
+}
+
+/* LOGIN LINK */
+.login-link{
+    text-align:center;
+    margin-top:15px;
+    font-size:14px;
+}
+
+.login-link a{
+    color:#1080e2;
+    text-decoration:none;
+    font-weight:500;
+}
+
+.login-link a:hover{
+    text-decoration:underline;
+}
+
+/* FOOTER */
+footer{
+    text-align:center;
+    font-size:12px;
+    margin-top:20px;
+    color:#999;
+}
+</style>
+</head>
+<body>
+
+<div class="register-container">
+    <h2>Create Client Account</h2>
+    <p>Register to start your advertising campaigns</p>
+
+    <form method="POST" action="/register">
+
+        <div class="input-group">
+            <i class="fa fa-user"></i>
+            <input type="text" name="name" placeholder="Full Name" required>
+        </div>
+
+        <div class="input-group">
+            <i class="fa fa-envelope"></i>
+            <input type="email" name="email" placeholder="Email Address" required>
+        </div>
+
+        <div class="input-group">
+            <i class="fa fa-phone"></i>
+            <input type="text" name="phone" placeholder="phone Number" required>
+        </div>
+
+        <div class="input-group">
+            <i class="fa fa-lock"></i>
+            <input type="password" name="password" placeholder="Password" required>
+        </div>
+
+        <div class="input-group">
+            <i class="fa fa-lock"></i>
+            <input type="password" name="confirm_password" placeholder="Confirm Password" required>
+        </div>
+
+        <button type="submit" class="register-btn">Register Now</button>
+    </form>
+
+    <div class="login-link">
+        Already have an account? <a href="/login" onclick="window.location.href='/login'; return false;">Login</a>
+    </div>
+
+    <footer>
+        © 2025 AdIndiaHub | Client Panel
+    </footer>
+</div>
+
+</body>
+</html>

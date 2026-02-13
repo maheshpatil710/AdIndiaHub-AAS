@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Edit Profile</title>
+
+    <style>
+        body {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            font-family: 'Segoe UI', Arial;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .box {
+            width: 360px;
+            background: rgba(255,255,255,0.95);
+            padding: 30px;
+            border-radius: 18px;
+            text-align: center;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.3);
+            transform-style: preserve-3d;
+            animation: floatCard 4s ease-in-out infinite;
+        }
+
+        @keyframes floatCard {
+            0%   { transform: translateY(0) rotateX(0deg); }
+            50%  { transform: translateY(-12px) rotateX(6deg); }
+            100% { transform: translateY(0) rotateX(0deg); }
+        }
+
+        h2 {
+            margin-bottom: 15px;
+            color: #333;
+            letter-spacing: 1px;
+        }
+
+        img {
+            width: 110px;
+            height: 110px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin-bottom: 15px;
+            border: 4px solid #0d6efd;
+            box-shadow: 0 10px 25px rgba(13,110,253,0.6);
+            transition: transform 0.4s ease;
+        }
+
+        img:hover {
+            transform: scale(1.08) rotateZ(2deg);
+        }
+
+        input {
+            width: 100%;
+            padding: 12px;
+            margin-top: 12px;
+            border-radius: 10px;
+            border: 1px solid #ccc;
+            outline: none;
+            transition: 0.3s;
+        }
+
+        input:focus {
+            border-color: #0d6efd;
+            box-shadow: 0 0 10px rgba(13,110,253,0.5);
+            transform: scale(1.02);
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            margin-top: 18px;
+            background: linear-gradient(135deg, #0d6efd, #6610f2);
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 12px;
+            font-size: 15px;
+            letter-spacing: 1px;
+            box-shadow: 0 12px 25px rgba(13,110,253,0.5);
+            transition: all 0.3s ease;
+        }
+
+        button:hover {
+            transform: translateY(-4px) scale(1.03);
+            box-shadow: 0 18px 35px rgba(13,110,253,0.8);
+        }
+
+        button:active {
+            transform: scale(0.96);
+        }
+
+        a {
+            display: block;
+            margin-top: 14px;
+            text-decoration: none;
+            color: #555;
+            font-weight: 500;
+            transition: 0.3s;
+        }
+
+        a:hover {
+            color: #0d6efd;
+            transform: translateX(-4px);
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="box">
+    <h2>Edit Profile</h2>
+
+    <img src="{{ url_for('static', filename='profile_photos/' + (client.profile_photo or 'default.png')) }}">
+
+    <form method="POST" enctype="multipart/form-data">
+        <input type="text" name="name" value="{{ client.name }}" required>
+
+        <input type="file" name="photo">
+
+        <button type="submit">Update Profile</button>
+    </form>
+
+    <a href="/client-dashboard">⬅ Back to Dashboard</a>
+</div>
+
+</body>
+</html>

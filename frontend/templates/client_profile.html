@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>My Profile</title>
+<style>
+body {
+    font-family: Arial;
+    background:#f4f6f8;
+}
+.box {
+    width:400px;
+    margin:50px auto;
+    background:white;
+    padding:20px;
+    border-radius:10px;
+    text-align:center;
+    box-shadow:0 0 10px gray;
+}
+img {
+    width:120px;
+    height:120px;
+    border-radius:50%;
+    object-fit:cover;
+}
+</style>
+</head>
+<body>
+
+<div class="box">
+    <h2>My Profile</h2>
+
+    <img src="{{ url_for('static', filename='profile_photos/' + (client.profile_photo or 'default.png')) }}">
+    <h3>{{ client.name }}</h3>
+    <p>Email: {{ client.email }}</p>
+    <p>Client Profile</p>
+    <a href="/edit-profile">✏️ Edit Profile</a>
+
+    <a href="/client-dashboard">⬅ Back Dashboard</a>
+</div>
+
+</body>
+</html>

@@ -749,6 +749,24 @@ def add_client():
 
     return render_template("add_client.html")
 
+@app.route('/client-profile')
+def client_profile():
+    if 'client_id' not in session:
+        return redirect('/login')
+
+    client_id = session['client_id']
+    
+    conn = get_db_connection()
+    cursor = conn.cursor(dictionary=True)
+    cursor.execute("SELECT * FROM clients WHERE id=%s", (client_id,))
+    client = cursor.fetchone()
+
+    cursor.close()
+    conn.close()
+
+    return render_template("client_profile.html", client=client)
+
+
 
 
 # ---------------- LOGOUT ----------------

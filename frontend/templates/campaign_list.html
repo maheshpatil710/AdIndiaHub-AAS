@@ -33,6 +33,21 @@
         .pending{ color:orange; }
         .approved{ color:green; }
         .rejected{ color:red; }
+        .back-btn {
+            display: block;
+            width: fit-content;
+            margin-right: 30px;
+            margin-bottom: 20px;
+            padding: 10px 15px;
+            background: #0d6efd;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: 0.3s ease;
+        }
+        .back-btn:hover {
+            background: #084298;
+        }
     </style>
 </head>
 <body>
@@ -47,30 +62,23 @@
         <th>Platform</th>
         <th>Budget</th>
         <th>Status</th>
-        <th>Ad Video</th>
+       
     </tr>
 
     {% for c in campaigns %}
     <tr>
-        <td>{{ c.campaigns_id }}</td>
+        <td>{{ c.id }}</td>
         <td>{{ c.client_name }}</td>
         <td>{{ c.campaign_name }}</td>
         <td>{{ c.platform }}</td>
         <td>{{ c.budget }}</td>
         <td class="{{ c.status|lower }}">{{ c.status }}</td>
-        <td>
-            {% if c.ad_video %}
-                <video controls>
-                    <source src="{{ url_for('static', filename='ads_videos/' + c.ad_video) }}">
-                </video>
-            {% else %}
-                Not Assigned
-            {% endif %}
-        </td>
+       
     </tr>
     {% endfor %}
 
 </table>
+<a href="/admin-dashboard" class="back-btn" style="margin-left: auto; margin-right: 30px; margin-top: 20px;">⬅ Back to Dashboard</a>
 
 </body>
 </html>
