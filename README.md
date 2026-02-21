@@ -1,4 +1,4 @@
-# 📢 AdIndiaHub – Advertisement Agency System
+# AdIndiaHub – Advertisement Agency System
 
 AdIndiaHub is a web-based Advertisement Agency Management System developed using Python Flask and MySQL.  
 The system helps clients request marketing campaigns, while the admin creates and uploads advertisement videos and manages campaigns efficiently.
@@ -83,120 +83,99 @@ In this system:
 
 ## 🚀 How to Run the Project
 
-### 1️⃣ Install Required Software
+### 1️. Install Required Software
+```
 - Python 3.x  
 - MySQL Server  
 - VS Code or any IDE  
-
+```
 ---
 
-### 2️⃣ Install Python Libraries
-```bash
+### 2️. Install Python Libraries
+```
 pip install flask mysql-connector-python
-
+```
 
 ---
 
-3️⃣ Create Database
-
+3️. Create Database
+```
 CREATE DATABASE adindiahub;
-
+```
 Import the SQL file provided in the project.
 
 
 ---
 
-4️⃣ Run the Project
-
+4️. Run the Project
+```
 python app.py
-
+```
 Open browser and go to:
-
+```
 http://127.0.0.1:5000/
-
-
+```
 ---
 
-📷 Screenshots
+## Advantages
 
-Login Page
+- Reduces manual paperwork
 
-Client Dashboard
+- Centralized campaign management
 
-Admin Dashboard
+- Secure data storage
 
-Campaign Request Page
+- Easy to use interface
 
-Video Upload Page
-
-
-(Add screenshots here)
-
-
----
-
-✅ Advantages
-
-Reduces manual paperwork
-
-Centralized campaign management
-
-Secure data storage
-
-Easy to use interface
-
-Time-saving for clients and agency
+- Time-saving for clients and agency
 
 
 
 ---
 
-❌ Limitations
+## Limitations
 
-No online payment integration
+- No online payment integration
 
-No real-time analytics
+- No real-time analytics
 
-No mobile application
+- No mobile application
 
-Manual video creation (no AI generation)
+- Manual video creation (no AI generation)
 
-Limited user roles
-
-
-
----
-
-🔮 Future Enhancements
-
-AI-based advertisement video generation
-
-Real-time campaign analytics dashboard
-
-Mobile application (Android & iOS)
-
-Social media API integration
-
-Online payment gateway
-
-Cloud video storage
-
-Notification system (Email/SMS)
+- Limited user roles
 
 
 
 ---
 
-👨‍🎓 Developer Details
+## Future Enhancements
 
-Name: Mahesh Patil
-Course: BCS Final Year
-College: Dayanand College
-Project Type: Academic Final Year Project
+- AI-based advertisement video generation
+
+- Real-time campaign analytics dashboard
+
+- Mobile application (Android & iOS)
+
+- Social media API integration
+
+- Online payment gateway
+
+- Cloud video storage
+
+- Notification system (Email/SMS)
+
 
 
 ---
 
-📜 License
+## 👨‍🎓 Developer Details
+
+- **Mahesh Patil :** [![GitHub](https://img.shields.io/badge/@maheshpatil710-%230077B5.svg?logo=github&logoColor=white)](https://github.com/maheshpatil710)
+- **Sanket Bhairamadagi :** [![GitHub](https://img.shields.io/badge/@sanketbhairamadagi-%230077B5.svg?logo=github&logoColor=white)](https://github.com/sanketbhairamadagi)
+
+---
+
+## 📜 License
 
 This project is developed for educational purposes only.
