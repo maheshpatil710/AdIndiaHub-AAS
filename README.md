@@ -171,7 +171,7 @@ http://127.0.0.1:5000/
 
 ## 👨‍🎓 Developer Details
 
-- **Mahesh Patil :** [![GitHub](https://img.shields.io/badge/@maheshpatil710-%230077B5.svg?logo=github&logoColor=white)](https://github.com/maheshpatil710)
+- **Mahesh Patil :** [![GitHub](https://img.shields.io/badge/@maheshpatil045-%230077B5.svg?logo=github&logoColor=white)](https://github.com/maheshpatil045)
 - **Sanket Bhairamadagi :** [![GitHub](https://img.shields.io/badge/@sanketbhairamadagi-%230077B5.svg?logo=github&logoColor=white)](https://github.com/sanketbhairamadagi)
 
 ---
