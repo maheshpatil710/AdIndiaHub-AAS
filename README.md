@@ -98,7 +98,7 @@ pip install flask mysql-connector-python
 
 ---
 
-3️. Create Database
+### 3️. Create Database
 ```
 CREATE DATABASE adindiahub;
 ```
@@ -107,7 +107,7 @@ Import the SQL file provided in the project.
 
 ---
 
-4️. Run the Project
+### 4️. Run the Project
 ```
 python app.py
 ```
