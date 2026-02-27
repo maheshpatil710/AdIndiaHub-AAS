@@ -12,23 +12,98 @@
 }
 
 body{
-    height:100vh;
-    width:100vw;
-    background: linear-gradient(135deg,#0056d2,#00b4db);
+    min-height:100vh;
+    width:100%;
+    background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), 
+            url(https://images.unsplash.com/photo-1558494949-ef010cbdcc31?ixlib=rb-4.0.3&auto=format&fit=crop&w=2000&q=80);
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    display:flex;
+    flex-direction:column;
+}
+
+/* Navbar - Perfectly positioned at top */
+.navbar{
+    background:#0b0b0b;
+    padding:15px 50px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    color:white;
+    width:100%;
+    position:fixed;
+    top:0;
+    left:0;
+    z-index:1000;
+    box-shadow:0 2px 10px rgba(0,0,0,0.2);
+}
+
+.navbar h2{
+    font-size:24px;
+    font-weight:600;
+}
+
+.navbar h2 i{
+    margin-right:8px;
+}
+
+.nav-links{
+    display:flex;
+    gap:25px;
+}
+
+.navbar a{
+    color:white;
+    text-decoration:none;
+    font-size:15px;
+    font-weight:500;
+    padding:5px 0;
+    transition:0.3s;
+    position:relative;
+}
+
+/* Underline animation on hover */
+.navbar a::after{
+    content:'';
+    position:absolute;
+    bottom:0;
+    left:0;
+    width:0%;
+    height:2px;
+    background:white;
+    transition:width 0.3s ease;
+}
+
+.navbar a:hover::after{
+    width:100%;
+}
+
+.navbar a:hover{
+    transform:translateY(-2px);
+}
+
+/* Main Card Container - Centered with navbar spacing */
+.about-container{
+    flex:1;
     display:flex;
     justify-content:center;
     align-items:center;
+    padding:100px 20px 50px 20px; /* Top padding for navbar */
+    min-height:100vh;
 }
 
 /* Main Card */
 .about-box{
-    background: rgba(255,255,255,0.95);
+    background: rgba(35, 34, 34, 0.95);
     width:60%;
-    padding:40px;
+    max-width:900px;
+    padding:50px;
     border-radius:20px;
     box-shadow: 0 15px 40px rgba(0,0,0,0.3);
     text-align:center;
     animation: fadeUp 0.8s ease;
+    margin:0 auto;
 }
 
 @keyframes fadeUp{
@@ -44,48 +119,165 @@ body{
 
 .about-box h1{
     color:#0056d2;
-    font-size:32px;
-    margin-bottom:20px;
+    font-size:36px;
+    margin-bottom:25px;
+    position:relative;
+    display:inline-block;
+}
+
+.about-box h1::after{
+    content:'';
+    position:absolute;
+    bottom:-10px;
+    left:50%;
+    transform:translateX(-50%);
+    width:80px;
+    height:3px;
+    background:#0b5ed7;
+    border-radius:2px;
 }
 
 .about-box p{
     font-size:16px;
-    line-height:1.7;
-    color:#444;
+    line-height:1.8;
+    color:#f4ecec;
     margin-bottom:30px;
+    text-align:justify;
 }
 
-/* Back Button */
-.about-box a{
-    text-decoration:none;
-    padding:12px 25px;
-    background: linear-gradient(135deg,#0056d2,#003f9e);
-    color:white;
-    border-radius:25px;
+/* Features section (optional) */
+.features{
+    display:flex;
+    justify-content:space-around;
+    margin:40px 0 30px;
+    gap:20px;
+}
+
+.feature-item{
+    flex:1;
+    padding:15px;
+    background:rgba(11,94,215,0.1);
+    border-radius:10px;
+}
+
+.feature-item i{
+    font-size:24px;
+    color:#0b5ed7;
+    margin-bottom:10px;
+}
+
+.feature-item span{
+    display:block;
     font-size:14px;
-    transition:0.3s;
+    color:#f5eeee;
+    font-weight:500;
 }
 
-.about-box a:hover{
-    background: linear-gradient(135deg,#003f9e,#001f5f);
-    transform: scale(1.05);
+/* Responsive Design */
+@media (max-width: 1024px) {
+    .about-box {
+        width: 80%;
+        padding: 40px;
+    }
 }
+
+@media (max-width: 768px) {
+    .navbar {
+        padding:12px 20px;
+        flex-direction:column;
+        gap:10px;
+    }
+    
+    .nav-links {
+        gap:15px;
+        flex-wrap:wrap;
+        justify-content:center;
+    }
+    
+    .navbar h2 {
+        font-size:20px;
+    }
+    
+    .about-container {
+        padding:130px 15px 30px 15px;
+    }
+    
+    .about-box {
+        width: 95%;
+        padding: 30px;
+    }
+    
+    .about-box h1 {
+        font-size: 28px;
+    }
+    
+    .features {
+        flex-direction:column;
+        gap:10px;
+    }
+}
+
+@media (max-width: 480px) {
+    .navbar {
+        padding:10px 15px;
+    }
+    
+    .nav-links {
+        gap:10px;
+    }
+    
+    .navbar a {
+        font-size:13px;
+    }
+    
+    .about-box {
+        padding:25px;
+    }
+    
+    .about-box h1 {
+        font-size:24px;
+    }
+    
+    .about-box p {
+        font-size:14px;
+        line-height:1.6;
+    }
+}
+
+/* Font Awesome for icons (optional) */
+@import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css');
 </style>
 </head>
 
 <body>
 
-<div class="about-box">
-    <h1>About Our Advertisement Agency</h1>
-    <p>
-        AdIndiaHub is a modern Advertisement Agency Management System designed to help brands 
-        promote their products through powerful digital advertising campaigns.  
-        Our platform allows agencies to manage clients, create campaigns, analyze performance, 
-        and grow business efficiently with the help of technology.
-    </p>
-    <a href="/">⬅ Back to Home</a>
+<!-- Navbar - Perfectly fixed at top -->
+<div class="navbar">
+    <h2>
+        <i class="fas fa-bullhorn"></i>
+        AdIndiaHub
+    </h2>
+    <div class="nav-links">
+        <a href="/">Home</a>
+        <a href="/contact">Contact</a>
+        <a href="/login">Login</a>
+        <a href="/register">Register</a>
+    </div>
+</div>
+
+<!-- Main Content Container -->
+<div class="about-container">
+    <div class="about-box">
+        <h1>About Our Advertisement Agency</h1>
+        <p>
+            AdIndiaHub is a modern Advertisement Agency Management System designed to help brands 
+            promote their products through powerful digital advertising campaigns across multiple platforms 
+            including social media, search engines, and display networks. Our platform allows agencies to 
+            manage clients, create targeted campaigns, analyze real-time performance metrics, and grow 
+            business efficiently with the help of cutting-edge technology and data-driven insights.
+        </p>
+        
 </div>
 
 </body>
 </html>
->

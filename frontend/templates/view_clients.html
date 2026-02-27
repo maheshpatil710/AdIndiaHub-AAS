@@ -9,117 +9,200 @@
     margin:0;
     padding:0;
     box-sizing:border-box;
-    font-family:"Segoe UI", sans-serif;
+    font-family:"Segoe UI", Arial, sans-serif;
 }
 
-/* BACKGROUND */
+/* BASIC LIGHT THEME BACKGROUND */
 body{
-    background:linear-gradient(135deg,#0f172a,#1e293b);
-    color:white;
-    padding:20px;
+    background:#f5f7fa;
+    color:#333;
+    padding:30px 30px 30px 80px; /* Left padding to prevent content hiding behind fixed back icon */
+    min-height:100vh;
+    position:relative;
 }
 
-/* BACK ICON BUTTON */
+/* BACK ICON BUTTON - Perfectly fixed positioning with no overlap */
 .back-icon{
     position:fixed;
-    top:20px;
-    left:20px;
-    background:linear-gradient(135deg,#2563eb,#9333ea);
+    top:30px;
+    left:30px;
+    background:#4a6fa5;
     color:white;
-    padding:12px 14px;
-    border-radius:50%;
-    font-size:16px;
+    width:45px;
+    height:45px;
+    border-radius:8px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:18px;
     text-decoration:none;
-    box-shadow:0 5px 15px rgba(0,0,0,0.5);
-    transition:0.3s;
+    box-shadow:0 2px 10px rgba(0,0,0,0.1);
+    transition:all 0.2s ease;
     z-index:9999;
+    border:none;
+    cursor:pointer;
 }
 .back-icon:hover{
-    transform:scale(1.1);
-    background:#0d6efd;
+    background:#3b5a87;
+    transform:scale(1.05);
 }
 
-/* TOP HEADER BAR */
+/* TOP HEADER BAR - Exact match to image */
 .topbar{
-    background:linear-gradient(135deg,#2563eb,#9333ea);
-    padding:12px 20px;
-    border-radius:12px;
+    background:#4a6fa5;
+    color:white;
+    padding:15px 20px;
+    border-radius:10px;
     font-size:20px;
-    font-weight:bold;
-    box-shadow:0 10px 25px rgba(0,0,0,0.5);
+    font-weight:600;
+    box-shadow:0 2px 5px rgba(0,0,0,0.1);
+    margin-bottom:25px;
+    width:100%;
 }
 
-/* TITLE */
+/* TITLE - Exact match to image */
 h2{
     text-align:center;
-    margin:20px 0;
+    margin:20px 0 30px 0;
     font-size:28px;
+    font-weight:600;
+    color:#2c3e50;
 }
 
 /* TABLE BOX */
 .table-box{
-    background:rgba(255,255,255,0.08);
-    backdrop-filter:blur(12px);
-    border-radius:15px;
-    padding:10px;
-    box-shadow:0 10px 30px rgba(0,0,0,0.5);
+    background:white;
+    border-radius:10px;
+    padding:15px;
+    box-shadow:0 2px 10px rgba(0,0,0,0.08);
+    border:1px solid #e0e0e0;
 }
 
 /* TABLE */
 table{
     width:100%;
     border-collapse:collapse;
-    color:white;
+    background:white;
+    border-radius:8px;
+    overflow:hidden;
 }
 
 th, td{
-    padding:12px;
+    padding:14px 12px;
     text-align:center;
-    border-bottom:1px solid rgba(255,255,255,0.2);
+    border-bottom:1px solid #eaeef2;
 }
 
 th{
-    background:linear-gradient(135deg,#2563eb,#9333ea);
-    font-size:14px;
+    background:#4a6fa5;
+    color:white;
+    font-size:15px;
+    font-weight:600;
 }
 
-tr:hover{
-    background:rgba(255,255,255,0.1);
+td{
+    color:#444;
+}
+
+/* Alternate row coloring */
+tbody tr:nth-child(even){
+    background:#f8faff;
+}
+
+/* Row hover effect */
+tbody tr:hover{
+    background:#e8f0fe;
+}
+
+/* Table cell icon styling */
+td i{
+    margin-right:6px;
+    font-size:14px;
+    color:#4a6fa5;
+}
+
+/* Responsive for smaller screens */
+@media (max-width:768px){
+    body{
+        padding:20px 20px 20px 70px; /* Adjusted for mobile */
+    }
+    
+    .back-icon{
+        top:20px;
+        left:20px;
+        width:40px;
+        height:40px;
+    }
+    
+    .topbar{
+        font-size:18px;
+        padding:12px 15px;
+    }
+    
+    h2{
+        font-size:24px;
+        margin:15px 0 25px 0;
+    }
+    
+    th, td{
+        padding:10px 8px;
+        font-size:14px;
+    }
+    
+    .table-box{
+        padding:10px;
+    }
+}
+
+/* For very small screens */
+@media (max-width:480px){
+    body{
+        padding:60px 15px 15px 15px; /* Stack on top for very small screens */
+    }
+    
+    .back-icon{
+        top:15px;
+        left:15px;
+    }
 }
 </style>
 </head>
 
 <body>
 
-<!-- BACK BUTTON -->
+<!-- BACK BUTTON - Perfectly fixed at top-left corner -->
 <a href="/admin-dashboard" class="back-icon">
     <i class="fa fa-arrow-left"></i>
 </a>
 
-<!-- HEADER BAR -->
+<!-- HEADER BAR - Exactly as in image -->
 <div class="topbar">
-    👥 AdIndiaHub Client Management
+     Client Management
 </div>
 
-<h2>All Registered Clients</h2>
+<!-- TITLE - Exactly as in image -->
+<h2>ALL REGISTERED CLIENTS</h2>
 
 <div class="table-box">
 <table>
+<thead>
 <tr>
-    <th>ID</th>
-    <th>Client Name</th>
-    <th>Email</th>
-    <th>Phone</th>
+    <th><i class="fa-solid fa-hashtag"></i> ID</th>
+    <th><i class="fa-solid fa-user"></i> Client Name</th>
+    <th><i class="fa-solid fa-envelope"></i> Email</th>
+    <th><i class="fa-solid fa-phone"></i> Phone</th>
 </tr>
-
+</thead>
+<tbody>
 {% for c in clients %}
 <tr>
-    <td>{{ c.id }}</td>
+    <td> {{ c.id }}</td>
     <td>{{ c.name }}</td>
-    <td>{{ c.email }}</td>
+    <td> {{ c.email }}</td>
     <td>{{ c.phone }}</td>
 </tr>
 {% endfor %}
+</tbody>
 </table>
 </div>
 

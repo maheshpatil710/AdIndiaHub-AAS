@@ -9,130 +9,259 @@
     margin:0;
     padding:0;
     box-sizing:border-box;
-    font-family: "Segoe UI", sans-serif;
+    font-family:"Segoe UI", Arial, sans-serif;
 }
 
+/* BASIC LIGHT THEME BACKGROUND */
 body{
-    background:linear-gradient(135deg,#0f172a,#1e293b);
-    color:white;
+    background:#f5f7fa;
+    color:#333;
+    min-height:100vh;
 }
 
-/* TOP NAVBAR */
+/* TOP NAVBAR - Basic blue style */
 .topbar{
-    background:linear-gradient(135deg,#2563eb,#1d4ed8);
-    padding:12px 25px;
+    background:#4a6fa5;
+    color:white;
+    padding:15px 25px;
     display:flex;
     align-items:center;
     font-size:20px;
-    font-weight:bold;
-    box-shadow:0 5px 15px rgba(0,0,0,0.4);
+    font-weight:600;
+    box-shadow:0 2px 5px rgba(0,0,0,0.1);
 }
 
-/* BACK ICON */
+/* BACK ICON - Properly integrated in navbar */
 .back-icon{
     color:white;
-    font-size:22px;
+    font-size:20px;
     margin-right:15px;
     text-decoration:none;
-    transition:0.3s;
+    width:36px;
+    height:36px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    background:rgba(255,255,255,0.2);
+    border-radius:6px;
+    transition:all 0.2s ease;
 }
 .back-icon:hover{
-    color:#facc15;
-    transform:scale(1.2);
+    background:rgba(255,255,255,0.3);
+    transform:scale(1.05);
 }
 
 /* TITLE */
 h2{
     text-align:center;
-    margin:20px;
+    margin:30px 20px;
     font-size:28px;
-    font-weight:bold;
+    color:#2c3e50;
+    font-weight:600;
 }
 
-/* TABLE CONTAINER */
+/* TABLE CONTAINER - Basic white card */
 .table-box{
     width:95%;
+    max-width:1200px;
     margin:20px auto;
-    background:rgba(255,255,255,0.08);
-    backdrop-filter:blur(12px);
-    border-radius:12px;
-    padding:10px;
-    box-shadow:0 10px 30px rgba(0,0,0,0.5);
+    background:white;
+    border-radius:10px;
+    padding:15px;
+    box-shadow:0 2px 10px rgba(0,0,0,0.08);
+    border:1px solid #e0e0e0;
+    overflow-x:auto;
 }
 
 /* TABLE */
 table{
     width:100%;
     border-collapse:collapse;
-    color:white;
+    color:#444;
+    min-width:800px;
 }
 
 th, td{
-    padding:12px;
-    border-bottom:1px solid rgba(255,255,255,0.2);
+    padding:14px 12px;
+    border-bottom:1px solid #eaeef2;
     text-align:center;
 }
 
 th{
-    background:linear-gradient(135deg,#2563eb,#9333ea);
-    font-size:15px;
+    background:#4a6fa5;
     color:white;
+    font-size:15px;
+    font-weight:600;
 }
 
-tr:hover{
-    background:rgba(255,255,255,0.1);
+/* Alternate row coloring */
+tbody tr:nth-child(even){
+    background:#f8faff;
 }
 
-/* STATUS COLORS */
+tbody tr:hover{
+    background:#e8f0fe;
+}
+
+/* STATUS COLORS - Basic badge style */
 .pending{
-    color:#facc15;
-    font-weight:bold;
+    color:#856404;
+    background:#fff3cd;
+    padding:5px 12px;
+    border-radius:20px;
+    font-weight:500;
+    display:inline-block;
+    min-width:80px;
+    border:1px solid #ffeeba;
 }
 .approved{
-    color:#22c55e;
-    font-weight:bold;
+    color:#155724;
+    background:#d4edda;
+    padding:5px 12px;
+    border-radius:20px;
+    font-weight:500;
+    display:inline-block;
+    min-width:80px;
+    border:1px solid #c3e6cb;
 }
 .rejected{
-    color:#ef4444;
-    font-weight:bold;
+    color:#721c24;
+    background:#f8d7da;
+    padding:5px 12px;
+    border-radius:20px;
+    font-weight:500;
+    display:inline-block;
+    min-width:80px;
+    border:1px solid #f5c6cb;
+}
+
+/* Icons styling */
+.topbar i:not(.back-icon i){
+    margin-right:8px;
+}
+
+td i{
+    margin-right:6px;
+    color:#4a6fa5;
+}
+
+/* Table header icons */
+th i{
+    margin-right:6px;
+    color:rgba(255,255,255,0.9);
+}
+
+/* Responsive */
+@media (max-width:768px){
+    .topbar{
+        padding:12px 20px;
+        font-size:18px;
+    }
+    
+    h2{
+        font-size:24px;
+        margin:20px 15px;
+    }
+    
+    .table-box{
+        width:98%;
+        padding:10px;
+    }
+    
+    th, td{
+        padding:10px 8px;
+        font-size:14px;
+    }
+}
+
+@media (max-width:480px){
+    .back-icon{
+        width:32px;
+        height:32px;
+        margin-right:10px;
+    }
+    
+    .topbar{
+        padding:10px 15px;
+    }
 }
 </style>
 </head>
 
 <body>
 
-<!-- TOP BAR -->
+<!-- TOP NAVBAR with integrated back button -->
 <div class="topbar">
     <a href="/admin-dashboard" class="back-icon">
         <i class="fa-solid fa-arrow-left"></i>
     </a>
-    AdIndiaHub Admin Panel
+    <i class="fa-solid fa-chart-pie"></i> Campaign list
 </div>
 
-<h2>📢 All Campaigns</h2>
+<!-- TITLE with icon -->
+<h2>
+    
+    ALL CAMPAIGNS
+</h2>
 
+<!-- TABLE CONTAINER -->
 <div class="table-box">
 <table>
+<thead>
 <tr>
-    <th>ID</th>
-    <th>Client</th>
-    <th>Campaign Name</th>
-    <th>Platform</th>
-    <th>Budget</th>
-    <th>Status</th>
+    <th><i class="fa-solid fa-hashtag"></i> ID</th>
+    <th><i class="fa-solid fa-user"></i> Client</th>
+    <th><i class="fa-solid fa-bullhorn"></i> Campaign Name</th>
+    <th><i class="fa-solid fa-chart-simple"></i> Platform</th>
+    <th><i class="fa-solid fa-indian-rupee-sign"></i> Budget</th>
+    <th><i class="fa-solid fa-circle-info"></i> Status</th>
 </tr>
-
+</thead>
+<tbody>
 {% for c in campaigns %}
 <tr>
-    <td>{{ c.id }}</td>
-    <td>{{ c.client_name }}</td>
-    <td>{{ c.campaign_name }}</td>
-    <td>{{ c.platform }}</td>
-    <td>₹ {{ c.budget }}</td>
-    <td class="{{ c.status|lower }}">{{ c.status }}</td>
+    <td> {{ c.id }}</td>
+    <td>
+        {{ c.client_name }}
+    </td>
+    <td> 
+        {{ c.campaign_name }}
+    </td>
+    <td>
+        {% if c.platform|lower == 'facebook' %}
+            <i class="fa-brands fa-facebook" style="color:#4267B2;"></i>
+        {% elif c.platform|lower == 'instagram' %}
+            <i class="fa-brands fa-instagram" style="color:#E4405F;"></i>
+        {% elif c.platform|lower == 'google' %}
+            <i class="fa-brands fa-google" style="color:#4285F4;"></i>
+        {% elif c.platform|lower == 'twitter' %}
+            <i class="fa-brands fa-twitter" style="color:#1DA1F2;"></i>
+        {% elif c.platform|lower == 'linkedin' %}
+            <i class="fa-brands fa-linkedin" style="color:#0077B5;"></i>
+        {% else %}
+            <i class="fa-solid fa-globe" style="color:#4a6fa5;"></i>
+        {% endif %}
+        {{ c.platform }}
+    </td>
+    <td>
+        <i class="fa-solid fa-indian-rupee-sign" style="color:#4a6fa5;"></i> 
+        {{ c.budget }}
+    </td>
+    <td>
+        <span class="{{ c.status|lower }}">
+            {% if c.status|lower == 'approved' %}
+                <i class="fa-regular fa-circle-check"></i>
+            {% elif c.status|lower == 'pending' %}
+                <i class="fa-regular fa-clock"></i>
+            {% elif c.status|lower == 'rejected' %}
+                <i class="fa-regular fa-circle-xmark"></i>
+            {% endif %}
+            {{ c.status }}
+        </span>
+    </td>
 </tr>
 {% endfor %}
-
+</tbody>
 </table>
 </div>
 

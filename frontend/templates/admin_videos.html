@@ -7,123 +7,294 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
 <style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
 
 body {
-    margin: 0;
-    font-family: 'Poppins', sans-serif;
-    background: linear-gradient(120deg, #1d2671, #c33764);
+    font-family: 'Segoe UI', Arial, sans-serif;
+    background: #f5f7fa;
     min-height: 100vh;
-    padding: 40px;
+    padding: 30px 30px 30px 80px; /* Left padding for back icon */
+    position: relative;
+}
+
+/* BACK ICON BUTTON - Perfectly fixed positioning */
+.back-icon {
+    position: fixed;
+    top: 30px;
+    left: 30px;
+    background: #4a6fa5;
+    color: white;
+    width: 45px;
+    height: 45px;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    text-decoration: none;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    transition: all 0.2s ease;
+    z-index: 9999;
+    border: none;
+}
+
+.back-icon:hover {
+    background: #3b5a87;
+    transform: scale(1.05);
 }
 
 /* Page Title */
 h2 {
     text-align: center;
-    color: #fff;
-    margin-bottom: 30px;
-    font-size: 30px;
-    font-weight: bold;
+    color: #2c3e50;
+    margin: 20px 0 40px 0;
+    font-size: 32px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
 }
 
 /* Video Grid */
 .container {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     gap: 25px;
-    max-width: 1200px;
-    margin: auto;
+    max-width: 1400px;
+    margin: 0 auto;
 }
 
-/* Video Card Glass Effect */
+/* Video Card - Basic card style */
 .video-card {
-    background: rgba(255,255,255,0.15);
-    backdrop-filter: blur(12px);
-    border-radius: 15px;
-    padding: 15px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.4);
-    transition: 0.3s;
-    border: 1px solid rgba(255,255,255,0.2);
+    background: white;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+    transition: all 0.2s ease;
+    border: 1px solid #e0e0e0;
 }
 
 .video-card:hover {
-    transform: translateY(-8px);
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.12);
 }
 
 /* Video Title */
 .video-title {
-    font-weight: bold;
-    margin-bottom: 10px;
-    color: white;
+    font-weight: 600;
+    margin-bottom: 15px;
+    color: #2c3e50;
     text-align: center;
+    font-size: 16px;
+    padding: 8px;
+    background: #f8faff;
+    border-radius: 6px;
+    word-break: break-all;
 }
 
 /* Video Player */
 video {
     width: 100%;
     height: 200px;
-    border-radius: 10px;
-    background: black;
+    border-radius: 8px;
+    background: #1a1a1a;
+    border: 1px solid #e0e0e0;
 }
 
 /* No Video Text */
 .no-videos {
     text-align: center;
-    color: white;
+    color: #666;
     font-size: 18px;
-    margin-top: 50px;
-}
-
-/* Floating Back Icon */
-.back-icon {
-    position: fixed;
-    top: 20px;
-    left: 20px;
+    margin-top: 100px;
+    padding: 40px;
     background: white;
-    color: #0072ff;
-    padding: 12px 15px;
-    border-radius: 50%;
-    font-size: 18px;
-    text-decoration: none;
-    box-shadow: 0 8px 20px rgba(0,0,0,0.4);
-    transition: 0.3s;
-    z-index: 9999;
+    border-radius: 12px;
+    max-width: 500px;
+    margin-left: auto;
+    margin-right: auto;
+    border: 1px solid #e0e0e0;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.08);
 }
 
-.back-icon:hover {
-    background: #0072ff;
-    color: white;
-    transform: scale(1.15);
+/* Video count badge */
+.video-count {
+    text-align: center;
+    margin-bottom: 25px;
+    color: #4a6fa5;
+    font-weight: 500;
+    font-size: 16px;
 }
 
+/* Video metadata */
+.video-meta {
+    margin-top: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    color: #718096;
+    font-size: 13px;
+    padding-top: 10px;
+    border-top: 1px solid #eaeef2;
+}
 
+/* Responsive Design */
+@media (max-width: 768px) {
+    body {
+        padding: 20px 20px 20px 70px;
+    }
+    
+    .back-icon {
+        top: 20px;
+        left: 20px;
+        width: 40px;
+        height: 40px;
+    }
+    
+    h2 {
+        font-size: 26px;
+        margin: 15px 0 30px 0;
+    }
+    
+    .container {
+        gap: 15px;
+    }
+    
+    .video-card {
+        padding: 15px;
+    }
+    
+    video {
+        height: 180px;
+    }
+}
+
+@media (max-width: 480px) {
+    body {
+        padding: 70px 15px 15px 15px;
+    }
+    
+    .back-icon {
+        top: 15px;
+        left: 15px;
+    }
+    
+    h2 {
+        font-size: 22px;
+        flex-direction: column;
+        gap: 5px;
+    }
+    
+    .container {
+        grid-template-columns: 1fr;
+    }
+    
+    .no-videos {
+        margin-top: 50px;
+        padding: 30px 20px;
+        font-size: 16px;
+    }
+}
+
+/* Loading animation for videos */
+.video-card {
+    position: relative;
+}
+
+.video-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+    transform: translateX(-100%);
+    animation: shimmer 1.5s infinite;
+    pointer-events: none;
+    border-radius: 12px;
+}
+
+@keyframes shimmer {
+    100% {
+        transform: translateX(100%);
+    }
+}
+
+/* Remove animation after load (simplified) */
+.video-card {
+    animation: none;
+}
 </style>
 </head>
 
 <body>
 
-<!-- Floating Back Icon -->
+<!-- BACK BUTTON - Perfectly fixed at top-left -->
 <a href="/admin-dashboard" class="back-icon">
     <i class="fa fa-arrow-left"></i>
 </a>
 
-<h2>📺 Uploaded Advertisement Videos</h2>
+<!-- Page Title with icon -->
+<h2>
+    <i class="fa-solid fa-video" style="color: #4a6fa5;"></i>
+    Uploaded Advertisement Videos
+    {% if videos %}
+    <span style="font-size: 16px; background: #4a6fa5; color: white; padding: 5px 12px; border-radius: 20px; margin-left: 10px;">
+        {{ videos|length }} total
+    </span>
+    {% endif %}
+</h2>
 
 {% if videos %}
+<!-- Video count badge (optional) -->
+<div class="video-count">
+    <i class="fa-regular fa-eye" style="margin-right: 5px;"></i>
+    Showing {{ videos|length }} video{% if videos|length > 1 %}s{% endif %}
+</div>
+
+<!-- Video Grid -->
 <div class="container">
     {% for video in videos %}
         <div class="video-card">
-            <div class="video-title">{{ video }}</div>
-            <video controls>
+            <div class="video-title">
+                <i class="fa-regular fa-file-video" style="color: #4a6fa5; margin-right: 5px;"></i>
+                {{ video }}
+            </div>
+            <video controls preload="metadata">
                 <source src="{{ url_for('static', filename='ads_videos/' + video) }}">
                 Your browser does not support the video tag.
             </video>
+            <div class="video-meta">
+                <span>
+                    <i class="fa-regular fa-clock"></i>
+                    Click play to watch
+                </span>
+                <span>
+                    <i class="fa-regular fa-file"></i>
+                    {{ video[-3:]|upper }}
+                </span>
+            </div>
         </div>
     {% endfor %}
 </div>
 {% else %}
-<p class="no-videos">No videos uploaded yet.</p>
+<!-- No videos message -->
+<p class="no-videos">
+    <i class="fa-regular fa-circle-exclamation" style="font-size: 40px; color: #4a6fa5; margin-bottom: 15px; display: block;"></i>
+    No videos uploaded yet.<br>
+    <span style="font-size: 14px; color: #999; margin-top: 10px; display: block;">
+        <a href="/upload-ad" style="color: #4a6fa5; text-decoration: none;">
+            <i class="fa-solid fa-upload"></i> Upload your first video
+        </a>
+    </span>
+</p>
 {% endif %}
-
 
 </body>
 </html>
