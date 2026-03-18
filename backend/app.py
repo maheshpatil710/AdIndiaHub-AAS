@@ -652,7 +652,7 @@ def assign_video(request_id):
     cursor.close()
     conn.close()
 
-    flash("Campaign approved with video 🎥")
+    flash("Campaign approved with video ")
     return redirect("/admin-campaign-requests")
 
 # ---------------- ADMIN CAMPAIGNS ----------------
@@ -750,7 +750,7 @@ def edit_campaign(id):
         cursor.close()
         conn.close()
 
-        flash("Campaign updated successfully ✅")
+        flash("Campaign updated successfully ")
         return redirect("/view-campaigns")
 
     cursor.close()
