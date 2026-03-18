@@ -3,60 +3,131 @@
 <head>
 <title>My Profile</title>
 
+<!-- Font Awesome -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
 <style>
-body {
-    font-family: Arial;
-    background:#f4f6f8;
+
+body{
+    margin:0;
+    padding:0;
+    font-family:'Segoe UI', sans-serif;
+    background:#f1f3f6;
 }
 
-.box {
-    width:400px;
-    margin:50px auto;
+.container{
+    width:80%;
+    margin:60px auto;
+}
+
+.box{
     background:white;
-    padding:20px;
-    border-radius:10px;
-    text-align:center;
-    box-shadow:0 0 10px gray;
+    border-radius:15px;
+    padding:30px;
+    box-shadow:0 10px 25px rgba(0,0,0,0.1);
 }
 
-img {
-    width:120px;
-    height:120px;
+.profile-header{
+    display:flex;
+    align-items:center;
+    gap:25px;
+}
+
+.profile-header img{
+    width:110px;
+    height:110px;
     border-radius:50%;
     object-fit:cover;
-    margin-bottom:10px;
 }
 
-a {
-    display:inline-block;
-    margin:8px 5px;
-    padding:8px 12px;
+.profile-info h2{
+    margin:0;
+    color:#1b4f72;
+}
+
+.profile-info p{
+    margin:4px 0;
+    color:#555;
+}
+
+hr{
+    margin:25px 0;
+    border:0;
+    border-top:1px solid #ddd;
+}
+
+.details{
+    margin-bottom:20px;
+}
+
+.details h4{
+    margin-bottom:5px;
+    color:#555;
+}
+
+.details p{
+    margin:0;
+    color:#222;
+}
+
+.buttons{
+    margin-top:20px;
+}
+
+.buttons a{
     text-decoration:none;
-    background:#0d6efd;
+    padding:10px 18px;
+    border-radius:8px;
+    background:#4a5568;
     color:white;
-    border-radius:5px;
+    margin-right:10px;
     font-size:14px;
+    transition:0.3s;
 }
 
-a:hover {
-    background:#0b5ed7;
+.buttons a:hover{
+    background:#2d3748;
 }
+
+.buttons i{
+    margin-right:6px;
+}
+
 </style>
 </head>
 
 <body>
 
+<div class="container">
+
 <div class="box">
-    <h2>My Profile</h2>
 
-    <img src="{{ url_for('static', filename='profile_photos/' + (client.profile_photo or 'default.png')) }}">
-    
-    <h3>{{ client.name }}</h3>
-    <p>Email: {{ client.email }}</p>
-    <p>Client Profile</p>
+<div class="profile-header">
 
-    <a href="/edit-profile">✏️ Edit Profile</a>
-    <a href="/client-dashboard">⬅ Back Dashboard</a>
+<img src="{{ url_for('static', filename='profile_photos/' + (client.profile_photo or 'default.png')) }}">
+
+<div class="profile-info">
+<h2>{{ client.name }}</h2>
+<p>{{ client.email }}</p>
+<p>Client Profile</p>
+</div>
+
+</div>
+
+<hr>
+
+<div class="details">
+<h4>About</h4>
+<p>Client of Advertisement Agency System.</p>
+</div>
+
+<div class="buttons">
+<a href="/edit-profile"><i class="fa fa-user-pen"></i> Edit Profile</a>
+<a href="/client-dashboard"><i class="fa fa-arrow-left"></i> Back Dashboard</a>
+</div>
+
+</div>
+
 </div>
 
 </body>
