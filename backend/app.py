@@ -682,7 +682,8 @@ def admin_campaigns():
 @app.route("/client/logout")
 def client_logout():
     session.clear()
-    return redirect("/")
+    flash("Logged out successfully", "info")
+    return redirect("/login")
 
 # ---------------- VIEW CAMPAIGNS (ADMIN ONLY) ----------------
 
